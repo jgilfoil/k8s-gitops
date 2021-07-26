@@ -1,8 +1,6 @@
-# Template for deploying k3s backed by Flux
+# Jason's K3s Cluster state managed by Flux
 
-Template for deploying a single [k3s](https://k3s.io/) cluster with [k3sup](https://github.com/alexellis/k3sup) backed by [Flux](https://toolkit.fluxcd.io/) and [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/).
-
-The purpose here is to showcase how you can deploy an entire Kubernetes cluster and show it off to the world using the [GitOps](https://www.weave.works/blog/what-is-gitops-really) tool [Flux](https://toolkit.fluxcd.io/). When completed, your Git repository will be driving the state of your Kubernetes cluster. In addition with the help of the [Flux SOPS integration](https://toolkit.fluxcd.io/guides/mozilla-sops/) you'll be able to commit GPG encrypted secrets to your public repo.
+[GitOps](https://www.weave.works/blog/what-is-gitops-really) Repo for deploying my [k3s](https://k3s.io/) cluster with [k3sup](https://github.com/alexellis/k3sup) backed by [Flux](https://toolkit.fluxcd.io/) and [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/).
 
 ## Overview
 
@@ -15,15 +13,13 @@ The purpose here is to showcase how you can deploy an entire Kubernetes cluster 
 
 ## :wave:&nbsp; Introduction
 
-The following components will be installed in your [k3s](https://k3s.io/) cluster by default. They are only included to get a minimum viable cluster up and running. You are free to add / remove components to your liking but anything outside the scope of the below components are not supported by this template.
-
-Feel free to read up on any of these technologies before you get started to be more familiar with them.
+The following components will be installed in this [k3s](https://k3s.io/) cluster by default.
 
 - [flannel](https://github.com/flannel-io/flannel)
 - [local-path-provisioner](https://github.com/rancher/local-path-provisioner)
 - [flux](https://toolkit.fluxcd.io/)
 - [metallb](https://metallb.universe.tf/)
-- [cert-manager](https://cert-manager.io/) with CloudDNS DNS challenge
+- [cert-manager](https://cert-manager.io/) with Google CloudDNS DNS challenge
 - [ingress-nginx](https://kubernetes.github.io/ingress-nginx/)
 - [homer](https://github.com/bastienwirtz/homer)
 - [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller)
@@ -51,9 +47,11 @@ Already provisioned Bare metal or VMs with any modern operating system like Ubun
 | [kustomize](https://kustomize.io/)                                 | Template-free way to customize application configuration            |     `4.1.0`     |    ❌     |
 | [helm](https://helm.sh/)                                           | Manage Kubernetes applications                                      |     `3.5.4`     |    ❌     |
 
+These tools are pre-installed in a [Vagrant VM](https://www.vagrantup.com), purpose built to mangage this cluster. You can find that repo [here](https://github.com/jgilfoil/cluster-infra)
+
 ### :warning:&nbsp; pre-commit
 
-It is advisable to install [pre-commit](https://pre-commit.com/) and the pre-commit hooks that come with this repository.
+Install [pre-commit](https://pre-commit.com/) and the pre-commit hooks that come with this repository.
 [sops-pre-commit](https://github.com/k8s-at-home/sops-pre-commit) will check to make sure you are not by accident commiting your secrets un-encrypted.
 
 After pre-commit is installed on your machine run:
@@ -90,11 +88,9 @@ cluster
 
 ## :rocket:&nbsp; Lets go!
 
-Very first step will be to create a new repository by clicking the **Use this template** button on this page.
-
 :round_pushpin: In these instructions you will be exporting several environment variables to your current shell env. Make sure you stay with in your current shell to not lose any exported variables.
 
-:round_pushpin: **All of the below commands** are run on your **local** workstation, **not** on any of your cluster nodes. 
+:round_pushpin: **All of the below commands** are run on your Vagrant VM workstation(named "control"), **not** on any of your cluster nodes. 
 
 ### :closed_lock_with_key:&nbsp; Setting up GnuPG keys
 
@@ -123,6 +119,7 @@ gpg --list-secret-keys "${PERSONAL_KEY_NAME}"
 
 export PERSONAL_KEY_FP=772154FFF783DE317KLCA0EC77149AC618D75581
 ```
+If your cluster already exists, simply set the `PERSONAL_KEY_FP` as shown above, from your password safe.
 
 2. Create a Flux GPG Key and export the fingerprint
 
@@ -148,6 +145,7 @@ gpg --list-secret-keys "${FLUX_KEY_NAME}"
 
 export FLUX_KEY_FP=AB675CE4CC64251G3S9AE1DAA88ARRTY2C009E2D
 ```
+If the cluster already exists, simply set the `FLUX_KEY_NAME` as shown above from your password safe.
 
 ### :sailboat:&nbsp; Installing k3s with k3sup
 
