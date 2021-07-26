@@ -23,7 +23,7 @@ Feel free to read up on any of these technologies before you get started to be m
 - [local-path-provisioner](https://github.com/rancher/local-path-provisioner)
 - [flux](https://toolkit.fluxcd.io/)
 - [metallb](https://metallb.universe.tf/)
-- [cert-manager](https://cert-manager.io/) with Cloudflare DNS challenge
+- [cert-manager](https://cert-manager.io/) with CloudDNS DNS challenge
 - [ingress-nginx](https://kubernetes.github.io/ingress-nginx/)
 - [homer](https://github.com/bastienwirtz/homer)
 - [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller)
@@ -184,26 +184,17 @@ kubectl --kubeconfig=./kubeconfig get nodes
 # k8s-worker-a   Ready    worker                    4d20h   v1.20.5+k3s1
 ```
 
-### :cloud:&nbsp; Cloudflare API Token
+### :cloud:&nbsp; Google Service Accout Key
 
-:round_pushpin: You may skip this step, **however** make sure to `export` dummy data **on item 8** in the below list.
+In order to use cert-manager with the Google CLoudDNS DNS challenge you will need to create a Service account key.
 
-...Be aware you **will not** have a valid SSL cert until cert-manager is configured correctly
-
-In order to use cert-manager with the Cloudflare DNS challenge you will need to create a API token.
-
-1. Head over to Cloudflare and create a API token by going [here](https://dash.cloudflare.com/profile/api-tokens).
-2. Click the blue `Create Token` button
-3. Scroll down and create a Custom Token by choosing `Get started`
-4. Give your token a name like `cert-manager`
-5. Under `Permissions` give read access to `Zone` : `Zone` and `Zone` : `DNS`
-6. Under `Zone Resources` set it to `Include` : `All Zones`
-7. Click `Continue to summary` and then `Create Token`
-8. Export this token and your Cloudflare email address to an environment variable on your system to be used in the following steps
+1. Head over to GCP and create a Service account from instructions [here](https://cert-manager.io/docs/configuration/acme/dns01/google/).
+2. Export this key and your project name to an environment variable on your system to be used in the following steps
 
 ```sh
-export BOOTSTRAP_CLOUDFLARE_EMAIL="k8s-at-home@gmail.com"
-export BOOTSTRAP_CLOUDFLARE_TOKEN="kpG6iyg3FS_du_8KRShdFuwfbwu3zMltbvmJV6cD"
+export BOOTSTRAP_CLOUDDNS_EMAIL="my@email.com"
+export BOOTSTRAP_CLOUDDNS_PROJECT="my-project-name"
+export BOOTSTRAP_CLOUDDNS_KEY="kpG6iyg3FS_du_8KRShdFuwfbwu3zMltbvmJV6cD"
 ```
 
 ### :small_blue_diamond:&nbsp; GitOps with Flux
