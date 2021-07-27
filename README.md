@@ -119,7 +119,7 @@ gpg --list-secret-keys "${PERSONAL_KEY_NAME}"
 
 export PERSONAL_KEY_FP=772154FFF783DE317KLCA0EC77149AC618D75581
 ```
-If your cluster already exists, simply set the `PERSONAL_KEY_FP` as shown above, from your password safe.
+If your cluster already exists, make sure the gpg keys have been [restored](https://risanb.com/code/backup-restore-gpg-key/) and set the `PERSONAL_KEY_FP` as shown above, from your password safe.
 
 2. Create a Flux GPG Key and export the fingerprint
 
@@ -145,7 +145,7 @@ gpg --list-secret-keys "${FLUX_KEY_NAME}"
 
 export FLUX_KEY_FP=AB675CE4CC64251G3S9AE1DAA88ARRTY2C009E2D
 ```
-If the cluster already exists, simply set the `FLUX_KEY_NAME` as shown above from your password safe.
+If the cluster already exists, make sure the gpg keys have been [restored](https://risanb.com/code/backup-restore-gpg-key/) and set the `FLUX_KEY_NAME` rather than generating new ones. (see password safe for backups)
 
 ### :sailboat:&nbsp; Installing k3s with k3sup
 
@@ -157,23 +157,39 @@ If the cluster already exists, simply set the `FLUX_KEY_NAME` as shown above fro
 
 ```sh
 k3sup install \
-    --host=169.254.1.1 \
-    --user=k8s-at-home \
+    --host=192.168.1.200 \
+    --user=ubuntu \
+    --cluster \
     --k3s-version=v1.20.5+k3s1 \
     --k3s-extra-args="--disable servicelb --disable traefik"
 ```
 
-3. Join worker nodes (optional)
+3. Join additional master nodes
 
 ```sh
+export IP=(ip of odroid target)
+export MASTER_IP=192.168.1.200
 k3sup join \
-    --host=169.254.1.2 \
-    --server-host=169.254.1.1 \
-    --k3s-version=v1.20.5+k3s1 \
-    --user=k8s-at-home
+  --ip $IP \
+  --user ubuntu \
+  --server-user ubuntu \
+  --server-ip $MASTER_IP \
+  --server \
+  --k3s-version v1.20.5+k3s1
 ```
 
-4. Verify the nodes are online
+4. Join additional agent nodes
+```sh
+export IP=(ip of odroid target)
+export MASTER_IP=192.168.1.200
+k3sup join \
+  --ip $IP \
+  --user ubuntu \
+  --server-ip $MASTER_IP
+  --k3s-version v1.20.5+k3s1
+```
+
+5. Verify the nodes are online
    
 ```sh
 kubectl --kubeconfig=./kubeconfig get nodes
