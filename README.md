@@ -167,7 +167,7 @@ k3sup install \
 3. Join additional master nodes
 
 ```sh
-export IP=(ip of odroid target)
+export IP=192.168.1.20(1|2)
 export MASTER_IP=192.168.1.200
 k3sup join \
   --ip $IP \
@@ -175,7 +175,8 @@ k3sup join \
   --server-user ubuntu \
   --server-ip $MASTER_IP \
   --server \
-  --k3s-version v1.20.5+k3s1
+  --k3s-version v1.20.5+k3s1 \
+  --k3s-extra-args="--disable servicelb --disable traefik"
 ```
 
 4. Join additional agent nodes
@@ -186,7 +187,8 @@ k3sup join \
   --ip $IP \
   --user ubuntu \
   --server-ip $MASTER_IP
-  --k3s-version v1.20.5+k3s1
+  --k3s-version v1.20.5+k3s1 \
+  --k3s-extra-args="--disable servicelb --disable traefik"
 ```
 
 5. Verify the nodes are online
@@ -244,13 +246,13 @@ kubectl --kubeconfig=./kubeconfig create secret generic sops-gpg \
 
 ```sh
 # The repo you created from this template
-export BOOTSTRAP_GITHUB_REPOSITORY="https://github.com/k8s-at-home/home-cluster"
+export BOOTSTRAP_GITHUB_REPOSITORY="https://github.com/jgilfoil/k8s-gitops"
 # Choose one of your domains or use a made up one
-export BOOTSTRAP_DOMAIN="k8s-at-home.com"
+export BOOTSTRAP_DOMAIN="apostoli.pw"
 # Pick a range of unused IPs that are on the same network as your nodes
-export BOOTSTRAP_METALLB_LB_RANGE="169.254.1.10-169.254.1.20"
+export BOOTSTRAP_METALLB_LB_RANGE="192.168.1.210-192.168.1.229"
 # The load balancer IP for ingress-nginx, choose from one of the available IPs above
-export BOOTSTRAP_INGRESS_NGINX_LB="169.254.1.10"
+export BOOTSTRAP_INGRESS_NGINX_LB="192.168.1.210"
 ```
 
 5. Create required files based on ALL exported environment variables.
