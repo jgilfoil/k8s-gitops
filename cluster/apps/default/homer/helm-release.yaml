@@ -110,7 +110,7 @@ spec:
               - name: "Plex"
                 icon: fas fa-compact-disc
                 #logo: "assets/tools/sample.png"
-                subtitle: "Movies, Tv, and Audio Books"
+                subtitle: "Movies, TV, and Audio Books"
                 tag: "App"
                 url: "https://plex.apostoli.pw:32400/web"
                 target: "_plex" # optional html a tag target attribute
