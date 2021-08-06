@@ -248,7 +248,7 @@ kubectl --kubeconfig=./kubeconfig create secret generic sops-gpg \
 # The repo you created from this template
 export BOOTSTRAP_GITHUB_REPOSITORY="https://github.com/jgilfoil/k8s-gitops"
 # Choose one of your domains or use a made up one
-export BOOTSTRAP_DOMAIN="apostoli.pw"
+export BOOTSTRAP_DOMAIN="me@mine.com"
 # Pick a range of unused IPs that are on the same network as your nodes
 export BOOTSTRAP_METALLB_LB_RANGE="192.168.1.210-192.168.1.229"
 # The load balancer IP for ingress-nginx, choose from one of the available IPs above
