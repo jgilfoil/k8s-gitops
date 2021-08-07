@@ -15,4 +15,4 @@ spec:
           project: "${SECRET_CLOUDDNS_PROJECT}"
           serviceAccountSecretRef:
             name: clouddns-key-secret
-            key: clouddns-key
+            key: key.json
