@@ -204,15 +204,24 @@ kubectl --kubeconfig=./kubeconfig get nodes
 
 In order to use cert-manager with the Google CLoudDNS DNS challenge you will need to create a Service account key.
 
-1. Head over to GCP and create a Service account from instructions [here](https://cert-manager.io/docs/configuration/acme/dns01/google/).
-2. Export this key and your project name to an environment variable on your system to be used in the following steps
+1. Head over to GCP and create a Service account from instructions [here](https://cert-manager.io/docs/configuration/acme/dns01/google/) (or use an existing key if you have one already)
+
+2. You can export the key.json file from google cloud console and copy and paste it into the below.
+```sh
+gcloud iam service-accounts keys create key.json \
+   --iam-account dns01-solver@$PROJECT_ID.iam.gserviceaccount.com
+```
+3. Export the contents of key.json, your google project name and your email address to the following environment variables on your system to be used in the following steps:
 
 ```sh
-export BOOTSTRAP_CLOUDDNS_EMAIL="my@email.com"
-export BOOTSTRAP_CLOUDDNS_PROJECT="my-project-name"
-export BOOTSTRAP_CLOUDDNS_KEY="kpG6iyg3FS_du_8KRShdFuwfbwu3zMltbvmJV6cD"
+export BOOTSTRAP_CLOUDDNS_EMAIL="my@email.com" #this is your personal email, not the gcp account email
+export BOOTSTRAP_CLOUDDNS_PROJECT="my-google-project-name" 
+export BOOTSTRAP_CLOUDDNS_KEY=$(echo { "type": "service_account", "project_id": etc... } | base64 -w 0) # json comes from key.json
 ```
-
+The BOOTSTRAP_CLOUDDNS_KEY is the base64 encoded output of the key.json file. You'll need to remove newlines to echo it as shown above, or use the original key.json file like this:
+```sh
+export BOOTSTRAP_CLOUDDNS_KEY=$(cat key.json | base64 -w 0)
+```
 ### :small_blue_diamond:&nbsp; GitOps with Flux
 
 :round_pushpin: Here we will be installing [flux](https://toolkit.fluxcd.io/) after some quick bootstrap steps.
