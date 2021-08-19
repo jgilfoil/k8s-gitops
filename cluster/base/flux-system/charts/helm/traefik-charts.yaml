@@ -8,3 +8,4 @@ spec:
   interval: 1h
   url: https://helm.traefik.io/traefik
   timeout: 3m
+  
