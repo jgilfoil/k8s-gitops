@@ -6,4 +6,4 @@ metadata:
   namespace: flux-system
 data:
   METALLB_LB_RANGE: 192.168.1.210-192.168.1.229
-  SVC_TRAEFIK_ADDR: 192.168.1.211
+  SVC_TRAEFIK_ADDR: 192.168.1.210
