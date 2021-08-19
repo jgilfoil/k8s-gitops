@@ -25,7 +25,7 @@ spec:
     deployment:
       enabled: true
       kind: DaemonSet
-      #replicas: 3
+      # replicas: 3
     service:
       enabled: true
       type: LoadBalancer
@@ -51,10 +51,10 @@ spec:
         enabled: false
     globalArguments:
       - "--api.insecure=true"
-      #- "--serverstransport.insecureskipverify=true"
+      # - "--serverstransport.insecureskipverify=true"
       - "--providers.kubernetesingress.ingressclass=traefik"
       - "--metrics.prometheus=false"
-      #- "--metrics.prometheus.entryPoint=metrics"
+      # - "--metrics.prometheus.entryPoint=metrics"
       - "--entryPoints.websecure.forwardedHeaders.trustedIPs=10.0.0.0/8,192.168.0.0/16"
     additionalArguments:
       - "--providers.kubernetesingress.ingressendpoint.ip=${SVC_TRAEFIK_ADDR}"
@@ -78,7 +78,7 @@ spec:
         sniStrict: true
     pilot:
       enabled: false
-      #token: "${SECRET_TRAEFIK_PILOT_TOKEN}"
+      # token: "${SECRET_TRAEFIK_PILOT_TOKEN}"
     experimental:
       plugins:
         enabled: true
