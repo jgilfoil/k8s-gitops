@@ -1,0 +1,76 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rook-ceph
+  namespace: rook-ceph
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.rook.io/release
+      chart: rook-ceph-cluster
+      version: v1.7.1
+      sourceRef:
+        kind: HelmRepository
+        name: rook-ceph-charts
+        namespace: flux-system
+  values:
+    placement:
+      all:
+        tolerations:
+          - operator: "Exists"
+    crashCollector:
+      disable: false
+        daysToRetain: 30
+    dashboard:
+      enabled: true
+      port: 7000
+    resources:
+        mon:
+          requests:
+            cpu: 35m
+            memory: 800Mi
+          limits:
+            memory: 1024Mi
+        osd:
+          requests:
+            cpu: 35m
+            memory: 2048Mi
+          limits:
+            memory: 4096Mi
+    storage:
+      useAllNodes: false
+      useAllDevices: false
+      config:
+        metadataDevice:
+        osdsPerDevice: "1"
+      nodes:
+        - name: "odroid-01"
+          devices:
+            - name: "sda"
+        - name: "odroid-02"
+          devices:
+            - name: "sda"
+        - name: "odroid-03"
+          devices:
+            - name: "sda"
+    ingress:
+      dashboard: {}
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        host:
+          name: "rook.${SECRET_DOMAIN}"
+          path: "/"
+        tls:
+          - hosts:
+              - "rook.${SECRET_DOMAIN}"
+    cephObjectStores:
+      - name: ceph-objectstore
+        spec:
+          dataPool:
+            - failureDomain: host
+              replicated:
+                size: 3
+        storageClass:
+          enabled: false
