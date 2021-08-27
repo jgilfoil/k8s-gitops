@@ -22,7 +22,7 @@ spec:
           - operator: "Exists"
     crashCollector:
       disable: false
-        daysToRetain: 30
+      daysToRetain: 30
     dashboard:
       enabled: true
       port: 7000
