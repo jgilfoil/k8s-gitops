@@ -65,4 +65,3 @@ spec:
         tls:
           - hosts:
               - "rook.${SECRET_DOMAIN}"
-
