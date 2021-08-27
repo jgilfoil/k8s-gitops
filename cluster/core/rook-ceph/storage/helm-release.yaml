@@ -65,12 +65,4 @@ spec:
         tls:
           - hosts:
               - "rook.${SECRET_DOMAIN}"
-    cephObjectStores:
-      - name: ceph-objectstore
-        spec:
-          dataPool:
-            - failureDomain: host
-              replicated:
-                size: 3
-        storageClass:
-          enabled: false
+
