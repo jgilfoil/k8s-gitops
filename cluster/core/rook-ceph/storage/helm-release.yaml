@@ -22,23 +22,23 @@ spec:
           - operator: "Exists"
     crashCollector:
       disable: false
-        daysToRetain: 30
+      daysToRetain: 30
     dashboard:
       enabled: true
       port: 7000
     resources:
-        mon:
-          requests:
-            cpu: 35m
-            memory: 800Mi
-          limits:
-            memory: 1024Mi
-        osd:
-          requests:
-            cpu: 35m
-            memory: 2048Mi
-          limits:
-            memory: 4096Mi
+      mon:
+        requests:
+          cpu: 35m
+          memory: 800Mi
+        limits:
+          memory: 1024Mi
+      osd:
+        requests:
+          cpu: 35m
+          memory: 2048Mi
+        limits:
+          memory: 4096Mi
     storage:
       useAllNodes: false
       useAllDevices: false
