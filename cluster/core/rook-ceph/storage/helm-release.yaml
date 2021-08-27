@@ -56,7 +56,7 @@ spec:
           devices:
             - name: "sda"
     ingress:
-      dashboard: {}
+      dashboard:
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         host:
@@ -65,12 +65,3 @@ spec:
         tls:
           - hosts:
               - "rook.${SECRET_DOMAIN}"
-    cephObjectStores:
-      - name: ceph-objectstore
-        spec:
-          dataPool:
-            - failureDomain: host
-              replicated:
-                size: 3
-        storageClass:
-          enabled: false
