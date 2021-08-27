@@ -56,7 +56,7 @@ spec:
           devices:
             - name: "sda"
     ingress:
-      dashboard: {}
+      dashboard:
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         host:
