@@ -1,0 +1,83 @@
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kubia-sc-claim
+spec:
+  storageClassName: ceph-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubia
+  labels:
+    app: kubia
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubia
+  template:
+    metadata:
+      name: kubia
+      labels:
+        app: kubia
+    spec:
+      containers:
+      - image: luksa/fortune
+        name: html-generator
+        volumeMounts:
+        - name: html
+          mountPath: /var/htdocs
+      - image: nginx:alpine
+        name: web-server
+        volumeMounts:
+        - name: html
+          mountPath: /usr/share/nginx/html
+          readOnly: true
+        ports:
+        - containerPort: 80
+          protocol: TCP
+      volumes:
+      - name: html
+        persistentVolumeClaim:
+          claimName: kubia-sc-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubia
+spec:
+  type: ClusterIP
+  selector:
+    app: kubia
+  ports:
+  - port: 8080
+    targetPort: 80
+---
+# This Configuration only works if the global entrypoint redirect for traefik is disabled. 
+# https://github.com/jgilfoil/k8s-gitops/pull/41
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kubia
+  namespace: default
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: "web"
+spec:
+  rules:
+    - host: kubia.apostoli.pw
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kubia
+                port:
+                  number: 8080
