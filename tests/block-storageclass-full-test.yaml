@@ -60,18 +60,17 @@ spec:
   - port: 8080
     targetPort: 80
 ---
-# This Configuration only works if the global entrypoint redirect for traefik is disabled. 
-# https://github.com/jgilfoil/k8s-gitops/pull/41
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: kubia
   namespace: default
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: "web"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
 spec:
+  ingressClassName: traefik
   rules:
-    - host: kubia.apostoli.pw
+    - host: "kubia.${SECRET_DOMAIN}"
       http:
         paths:
           - path: /
@@ -81,3 +80,6 @@ spec:
                 name: kubia
                 port:
                   number: 8080
+  tls:
+  - hosts:
+    - "kubia.${SECRET_DOMAIN}"
