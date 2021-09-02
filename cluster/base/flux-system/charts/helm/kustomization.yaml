@@ -8,3 +8,4 @@ resources:
 - metallb-charts.yaml
 - traefik-charts.yaml
 - rook-ceph-charts.yaml
+- weaveworks-kured-charts.yaml
