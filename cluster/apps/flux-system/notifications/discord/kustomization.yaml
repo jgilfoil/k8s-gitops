@@ -2,8 +2,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- default
-- networking
-- system-upgrade
-- kube-system
-- flux-system
+- notification.yaml
+- secret.sops.yaml
