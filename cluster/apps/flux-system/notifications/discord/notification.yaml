@@ -1,0 +1,32 @@
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta1
+kind: Provider
+metadata:
+  name: discord-flux-info
+  namespace: flux-system
+spec:
+  type: discord
+  username: k3s
+  channel: flux-info
+  secretRef:
+    name: discord-flux-info-webhook-url
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta1
+kind: Alert
+metadata:
+  name: home-cluster
+  namespace: flux-system
+spec:
+  providerRef:
+    name: discord-flux-info
+  eventSeverity: info
+  eventSources:
+    - kind: GitRepository
+      name: "*"
+    - kind: Kustomization
+      name: "*"
+    - kind: HelmRepository
+      name: "*"
+    - kind: HelmRelease
+      name: "*"
+  suspend: false
