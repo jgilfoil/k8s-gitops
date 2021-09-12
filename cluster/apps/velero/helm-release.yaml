@@ -52,8 +52,8 @@ spec:
           ttl: "120h"
     metrics:
       enabled: true
-      serviceMonitor:
-        enabled: true
+      # serviceMonitor:
+      #   enabled: true
     snapshotsEnabled: true
     upgradeCRDs: false
     cleanUpCRDs: false
