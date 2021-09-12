@@ -9,3 +9,4 @@ resources:
 - traefik-charts.yaml
 - rook-ceph-charts.yaml
 - weaveworks-kured-charts.yaml
+- vmware-tanzu-charts.yaml
