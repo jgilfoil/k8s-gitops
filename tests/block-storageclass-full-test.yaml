@@ -73,7 +73,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: "kubia.${SECRET_DOMAIN}"
+    - host: "kubia.apostoli.pw"
       http:
         paths:
           - path: /
@@ -85,4 +85,4 @@ spec:
                   number: 8080
   tls:
   - hosts:
-    - "kubia.${SECRET_DOMAIN}"
+    - "kubia.apostoli.pw"
