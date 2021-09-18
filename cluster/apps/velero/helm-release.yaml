@@ -25,7 +25,7 @@ spec:
       provider: aws
       backupStorageLocation:
         name: default
-        bucket: velero
+        bucket: k8sbackups
         config:
           region: us-east-1
           s3ForcePathStyle: true
