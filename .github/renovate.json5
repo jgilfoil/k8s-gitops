@@ -1,10 +1,17 @@
 {
   "enabled": true,
+  "timezone": "America/New_York",
   "semanticCommits": "enabled",
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{newVersion}}",
+  "commitMessageSuffix": "",
+  "helmv3": {
+    "fileMatch": ["charts/.+/Chart\\.yaml$"]
+  },
   "helm-values": {
     "fileMatch": [
       "cluster/.+/helm-release\\.yaml$"
@@ -17,7 +24,7 @@
     ],
     "ignorePaths": [
       "cluster/base/"
-    ],
+    ]
   },
   "regexManagers": [
     // regexManager to read and process HelmReleases
