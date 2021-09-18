@@ -12,31 +12,72 @@
   },
   "kubernetes": {
     "fileMatch": [
-      "cluster/.+\\.yaml$"
+      "cluster/.+\\.yaml$",
+      "server/.+\\.yaml$"
     ],
     "ignorePaths": [
       "cluster/base/"
     ],
   },
   "regexManagers": [
-    // regexManager to read and process HelmReleases and CRDs
+    // regexManager to read and process HelmReleases
     {
       "fileMatch": [
         "cluster/.+\\.yaml$"
       ],
       "matchStrings": [
         // helm releases
-        "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n",
-        // cert-manager crd
+        "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    },
+    // regexManager to read and process cert-manager CRD's
+    {
+      "fileMatch": [
+        "cluster/crds/cert-manager/.+\\.yaml$"
+      ],
+      "matchStrings": [
         "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/"
       ],
       "datasourceTemplate": "helm"
     },
+    // regexManager to read and process kube-prometheus-stack and velero CRD's
+    {
+      "fileMatch": [
+        //"cluster/crds/kube-prometheus-stack/.+\\.yaml$",
+        "cluster/crds/velero/.+\\.yaml$"
+      ],
+      "matchStrings": [
+        "registryUrl=(?<registryUrl>.*?)\n *tag: (?<depName>[a-zA-Z-]+)-(?<currentValue>.*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    },
+    // regexManager to read and process Traefik CRD's
+    {
+      "fileMatch": [
+        "cluster/crds/traefik/.+\\.yaml$"
+      ],
+      "matchStrings": [
+        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    },
+    // regexManager to read and process Rook-Ceph CRD's
+    {
+      "fileMatch": [
+        "cluster/crds/rook-ceph/.+\\.yaml$"
+      ],
+      "matchStrings": [
+        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: (?<currentValue>.*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    }
   ],
   "packageRules": [
     // setup datasources
     {
       "matchDatasources": ["helm"],
+      "semanticCommitScope": "charts",
       "separateMinorPatch": true,
       "ignoreDeprecated": true
     },
@@ -67,17 +108,35 @@
     {
       "matchDatasources": ["helm"],
       "matchUpdateTypes": ["major"],
+      "commitMessagePrefix": "feat(charts)!: ",
       "labels": ["renovate/helm", "dep/major"]
     },
     {
       "matchDatasources": ["helm"],
       "matchUpdateTypes": ["minor"],
+      "semanticCommitType": "feat",
       "labels": ["renovate/helm", "dep/minor"]
     },
     {
       "matchDatasources": ["helm"],
       "matchUpdateTypes": ["patch"],
+      "semanticCommitType": "fix",
       "labels": ["renovate/helm", "dep/patch"]
+    },
+    // group packages
+    {
+      "matchDatasources": ["helm", "docker"],
+      "matchPackagePatterns": ["^rook.ceph"],
+      "groupName": "rook-ceph-suite",
+      "additionalBranchPrefix": "",
+      "separateMinorPatch": true
+    },
+    {
+      "matchDatasources": ["github-tags", "docker"],
+      "matchPackagePatterns": ["rancher/system-upgrade-controller"],
+      "groupName": "system-upgrade-controller-suite",
+      "additionalBranchPrefix": "",
+      "separateMinorPatch": true
     }
   ]
 }
