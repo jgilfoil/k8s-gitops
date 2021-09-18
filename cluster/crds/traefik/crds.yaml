@@ -6,9 +6,10 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
-  ref:
-    tag: v10.1.6
   url: https://github.com/traefik/traefik-helm-chart.git
+  ref:
+    # renovate: registryUrl=https://helm.traefik.io/traefik chart=traefik
+    tag: v10.1.6
   ignore: |
     # exclude all
     /*
