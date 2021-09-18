@@ -51,7 +51,7 @@
     // regexManager to read and process kube-prometheus-stack and velero CRD's
     {
       "fileMatch": [
-        //"cluster/crds/kube-prometheus-stack/.+\\.yaml$",
+        "cluster/crds/kube-prometheus-stack/.+\\.yaml$",
         "cluster/crds/velero/.+\\.yaml$"
       ],
       "matchStrings": [
