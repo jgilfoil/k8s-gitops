@@ -6,8 +6,8 @@ metadata:
   namespace: flux-system
 spec:
   type: discord
-  username: k3s
-  channel: flux-info
+  username: flux
+  channel: cluster-info
   secretRef:
     name: discord-flux-info-webhook-url
 ---
