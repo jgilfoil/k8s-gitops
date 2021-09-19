@@ -3,19 +3,19 @@
   "timezone": "America/New_York",
   "semanticCommits": "enabled",
   "dependencyDashboard": true,
-  "dependencyDashboardTitle": "Renovate Dashboard",
+  "dependencyDashboardTitle": "Renovate Dashboard 🤖",
+  "commitBody": "Signed-off-by: Jason Gilfoil <jgilfoil@users.noreply.github.com>",
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
   "commitMessageTopic": "{{depName}}",
   "commitMessageExtra": "to {{newVersion}}",
   "commitMessageSuffix": "",
+  // set up Renovate Managers
   "helmv3": {
     "fileMatch": ["charts/.+/Chart\\.yaml$"]
   },
   "helm-values": {
-    "fileMatch": [
-      "cluster/.+/helm-release\\.yaml$"
-    ]
+    "fileMatch": ["cluster/.+/helm-release\\.yaml$"]
   },
   "kubernetes": {
     "fileMatch": [
@@ -92,24 +92,30 @@
     {
       "matchDatasources": ["docker"],
       "enabled": true,
-      "commitMessageTopic": "container image {{depName}}",
-      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
-      "matchUpdateTypes": ["major", "minor", "patch"],
+      "matchUpdateTypes": ["major", "minor", "patch"]
+    },
+    {
+      "matchDatasources": ["docker"],
+      "semanticCommitScope": "images",
+      "separateMinorPatch": true
     },
     // add labels according to package and update types
     {
       "matchDatasources": ["docker"],
       "matchUpdateTypes": ["major"],
+      "commitMessagePrefix": "feat(images)!: ",
       "labels": ["renovate/image", "dep/major"]
     },
     {
       "matchDatasources": ["docker"],
       "matchUpdateTypes": ["minor"],
+      "semanticCommitType": "feat",
       "labels": ["renovate/image", "dep/minor"]
     },
     {
       "matchDatasources": ["docker"],
       "matchUpdateTypes": ["patch"],
+      "semanticCommitType": "fix",
       "labels": ["renovate/image", "dep/patch"]
     },
     {
