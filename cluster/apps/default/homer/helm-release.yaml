@@ -154,7 +154,7 @@ spec:
                 tag: "Tools"
                 url: "https://wanshitong.apostoli.pw:9001/login"
               - name: "Router"
-                logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/minio.png"
+                logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/router.png"
                 subtitle: "Netgear Nighthawk - Tomato Router"
                 tag: "Tools"
                 url: "http://192.168.1.1"
