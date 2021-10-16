@@ -148,4 +148,14 @@ spec:
                 subtitle: "K8s Ingress and Traffic Router"
                 tag: "Tools"
                 url: "https://traefik.apostoli.pw"
-              
+              - name: "Minio"
+                logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/minio.png"
+                subtitle: "Velero K8s Bacukps"
+                tag: "Tools"
+                url: "https://wanshitong.apostoli.pw:9001/login"
+              - name: "Router"
+                logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/minio.png"
+                subtitle: "Netgear Nighthawk - Tomato Router"
+                tag: "Tools"
+                url: "http://192.168.1.1"
+
