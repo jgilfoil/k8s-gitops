@@ -152,7 +152,7 @@ spec:
                 logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/minio.png"
                 subtitle: "Velero K8s Bacukps"
                 tag: "Tools"
-                url: "https://wanshitong.apostoli.pw:9001/login"
+                url: "http://wanshitong.apostoli.pw:9001/login"
               - name: "Router"
                 logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/router.png"
                 subtitle: "Netgear Nighthawk - Tomato Router"
