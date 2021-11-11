@@ -23,9 +23,7 @@ spec:
     env:
       TZ: "America/New_York"
     podSecurityContext:
-      supplementalGroups:
-        - 44
-        - 100
+      fsGroup: 568
     service:
       main:
         type: LoadBalancer
