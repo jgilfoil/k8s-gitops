@@ -1,3 +1,4 @@
 # K8s-Gitops Expanded Documentation
 
-[Setup](SETUP.md)
+ - [Setup](SETUP.md)
+ - [Backups](BACKUPS.md)
