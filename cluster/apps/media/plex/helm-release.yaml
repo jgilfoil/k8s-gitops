@@ -60,8 +60,8 @@ spec:
         volumeSpec:
           nfs:
             server: "${NAS_ADDR}"
-            path: /volume2/Media/plex-test/
-        mountPath: /media/movies
+            path: /volume2/Media/
+        mountPath: /media
         readOnly: true
       transcode:
         enabled: true
