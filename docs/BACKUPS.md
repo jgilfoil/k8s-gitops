@@ -35,7 +35,7 @@ Taken from [Onedr0p's guide](https://onedr0p.github.io/home-cluster/storage/rook
 !!! info "Ran from your workstation"
 
 ```sh
-kubectl -n rook-ceph exec -it (kubectl -n rook-ceph get pod -l "app=rook-direct-mount" -o jsonpath='{.items[0].metadata.name}') bash
+kubectl -n rook-ceph exec -it $(kubectl -n rook-ceph get pod -l "app=rook-direct-mount" -o jsonpath='{.items[0].metadata.name}') -- bash
 ```
 
 !!! info "Ran from the `rook-ceph-toolbox`"
