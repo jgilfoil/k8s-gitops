@@ -65,7 +65,7 @@ kubectl scale deploy/home-assistant --replicas 0 -n home
 - Get the `csi-vol-*` string
 
 ```sh
-kubectl get pv/(kubectl get pv | grep home-assistant-config-v1 | awk -F' ' '{print $1}') -n home -o json | jq -r '.spec.csi.volumeAttributes.imageName'
+kubectl get pv/$(kubectl get pv | grep plex-config-v1 | awk -F' ' '{print $1}') -n home -o json | jq -r '.spec.csi.volumeAttributes.imageName'
 ```
 
 !!! info "Ran from the `rook-ceph-toolbox`"
