@@ -41,9 +41,7 @@ kubectl -n rook-ceph exec -it $(kubectl -n rook-ceph get pod -l "app=rook-direct
 !!! info "Ran from the `rook-ceph-toolbox`"
 
 ```sh
-mkdir -p /mnt/nfsdata
 mkdir -p /mnt/data
-mount -t nfs -o "nfsvers=4.1,hard" 192.168.42.60:/Data /mnt/nfsdata
 ```
 
 ## Move data to a NFS share or vice versa
@@ -53,13 +51,13 @@ mount -t nfs -o "nfsvers=4.1,hard" 192.168.42.60:/Data /mnt/nfsdata
 - Pause the Flux Helm Release
 
 ```sh
-flux suspend hr home-assistant -n home
+flux suspend hr plex -n media
 ```
 
 - Scale the application down to zero pods
 
 ```sh
-kubectl scale deploy/home-assistant --replicas 0 -n home
+kubectl scale deploy/plex --replicas 0 -n media
 ```
 
 - Get the `csi-vol-*` string
@@ -71,9 +69,9 @@ kubectl get pv/$(kubectl get pv | grep plex-config-v1 | awk -F' ' '{print $1}') 
 !!! info "Ran from the `rook-ceph-toolbox`"
 
 ```sh
-rbd map -p replicapool csi-vol-ebb786c7-9a6f-11eb-ae97-9a71104156fa \
+rbd map -p ceph-blockpool csi-vol-f9b9f8e5-430f-11ec-8e89-f6070945344b \
     | xargs -I{} mount {} /mnt/data
 tar czvf /mnt/nfsdata/Backups/home-assistant.tar.gz -C /mnt/data/ .
 umount /mnt/data
-rbd unmap -p replicapool csi-vol-ebb786c7-9a6f-11eb-ae97-9a71104156fa
+rbd unmap -p ceph-blockpool csi-vol-f9b9f8e5-430f-11ec-8e89-f6070945344b
 ```
