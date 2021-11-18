@@ -26,6 +26,7 @@ spec:
     dashboard:
       enabled: true
       port: 7000
+      ssl: true
     resources:
       mon:
         requests:
@@ -56,16 +57,12 @@ spec:
             - name: "sda"
     ingress:
       dashboard:
-        enabled: true
-        ingressClassName: "traefik"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        hosts:
-          - host: "rook.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
+        host:
+          name: "rook.${SECRET_DOMAIN}"
+          path: /
         tls:
           - hosts:
             - "rook.${SECRET_DOMAIN}"
