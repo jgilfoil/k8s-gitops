@@ -16,3 +16,6 @@ spec:
           serviceAccountSecretRef:
             name: clouddns-key-secret
             key: key.json
+      selector:
+        dnsZones:
+          - ${SECRET_DOMAIN}
