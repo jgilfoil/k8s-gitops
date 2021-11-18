@@ -10,12 +10,12 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-production
     solvers:
-    - dns01:
-        cloudDNS:
-          project: "${SECRET_CLOUDDNS_PROJECT}"
-          serviceAccountSecretRef:
-            name: clouddns-key-secret
-            key: key.json
-      selector:
-        dnsZones:
-          - ${SECRET_DOMAIN}
+      - dns01:
+          cloudDNS:
+            project: "${SECRET_CLOUDDNS_PROJECT}"
+            serviceAccountSecretRef:
+              name: clouddns-key-secret
+              key: key.json
+        selector:
+          dnsZones:
+            - ${SECRET_DOMAIN}
