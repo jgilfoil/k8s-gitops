@@ -65,18 +65,19 @@ If the cluster already exists, make sure the gpg keys have been [restored](https
 
 ### :sailboat:&nbsp; Installing k3s with k3sup
 
-:round_pushpin: Here we will be install [k3s](https://k3s.io/) with [k3sup](https://github.com/alexellis/k3sup). After completion, k3sup will drop a `kubeconfig` in your present working directory for use with interacting with your cluster with `kubectl`.
+:round_pushpin: Here we will be installing [k3s](https://k3s.io/) with [k3sup](https://github.com/alexellis/k3sup). After completion, k3sup will drop a `kubeconfig` in your present working directory for use with interacting with your cluster with `kubectl`.
 
 1. Ensure you are able to SSH into you nodes with using your private ssh key. This is how k3sup is able to connect to your remote node.
 
 2. Install the master node
 
 ```sh
+cd /code/k8s-gitops/
 k3sup install \
     --host=192.168.1.200 \
     --user=ubuntu \
     --cluster \
-    --k3s-version=v1.20.5+k3s1 \
+    --k3s-version=v1.21.6+k3s1 \
     --k3s-extra-args="--disable servicelb --disable traefik"
 ```
 
@@ -91,7 +92,7 @@ k3sup join \
   --server-user ubuntu \
   --server-ip $MASTER_IP \
   --server \
-  --k3s-version v1.20.5+k3s1 \
+  --k3s-version v1.21.6+k3s1 \
   --k3s-extra-args="--disable servicelb --disable traefik"
 ```
 
