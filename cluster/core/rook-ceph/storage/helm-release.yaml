@@ -26,7 +26,7 @@ spec:
     dashboard:
       enabled: true
       port: 7000
-      ssl: true
+      ssl: false
     resources:
       mon:
         requests:
@@ -63,7 +63,7 @@ spec:
         host:
           name: "rook.${SECRET_DOMAIN}"
           path: /
-        tls:
-          - hosts:
-            - "rook.${SECRET_DOMAIN}"
-            secret_name: "rook-dashboard-tls"
+        # tls:
+        #   - hosts:
+        #     - "rook.${SECRET_DOMAIN}"
+        #     secret_name: "rook-dashboard-tls"
