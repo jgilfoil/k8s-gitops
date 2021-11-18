@@ -62,7 +62,7 @@ spec:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
-          - hosts: "rook.${SECRET_DOMAIN}"
+          - host: "rook.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
