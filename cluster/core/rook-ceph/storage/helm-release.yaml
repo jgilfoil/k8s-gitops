@@ -58,13 +58,12 @@ spec:
     ingress:
       dashboard:
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          force-reload: triggered
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          cert-manager.io/cluster-issuer: letsencrypt-production
         host:
           name: "rook.${SECRET_DOMAIN}"
-          path: /
+          path: "/"
         tls:
-          - hosts:
+          - secret_name: "rook-dashboard-tls"
+            hosts:
               - "rook.${SECRET_DOMAIN}"
-            secret_name: "rook-dashboard-tls"
