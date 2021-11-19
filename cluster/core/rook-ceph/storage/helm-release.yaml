@@ -67,4 +67,3 @@ spec:
           - secret_name: "rook-dashboard-tls"
             hosts:
               - "rook.${SECRET_DOMAIN}"
-            
