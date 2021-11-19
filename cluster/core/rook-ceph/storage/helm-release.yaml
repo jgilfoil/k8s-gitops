@@ -24,9 +24,9 @@ spec:
       disable: false
       daysToRetain: 30
     dashboard:
-      enabled: true
+      enabled: false
       port: 7000
-      ssl: true
+      # ssl: true
     resources:
       mon:
         requests:
@@ -55,16 +55,16 @@ spec:
         - name: "odroid-03"
           devices:
             - name: "sda"
-    ingress:
-      dashboard:
-        annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          test-annotation: test-value
-        host:
-          name: "rook.${SECRET_DOMAIN}"
-          path: "/"
-        tls:
-          - secret_name: "rook-dashboard-tls"
-            hosts:
-              - "rook.${SECRET_DOMAIN}"
+    # ingress:
+    #   dashboard:
+    #     annotations:
+    #       traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    #       cert-manager.io/cluster-issuer: letsencrypt-production
+    #       test-annotation: test-value
+    #     host:
+    #       name: "rook.${SECRET_DOMAIN}"
+    #       path: "/"
+    #     tls:
+    #       - secret_name: "rook-dashboard-tls"
+    #         hosts:
+    #           - "rook.${SECRET_DOMAIN}"
