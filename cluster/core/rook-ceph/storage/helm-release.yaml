@@ -64,7 +64,7 @@ spec:
         host:
           name: "rook.${SECRET_DOMAIN}"
           path: "/"
-        # tls:
-        #   - secret_name: "rook-dashboard-tls"
-        #     hosts:
-        #       - "rook.${SECRET_DOMAIN}"
+        tls:
+          - secretName: "rook-dashboard-tls"
+            hosts:
+              - "rook.${SECRET_DOMAIN}"
