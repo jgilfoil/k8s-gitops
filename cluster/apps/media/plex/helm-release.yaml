@@ -37,6 +37,7 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
           # external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
           # external-dns/is-public: "true"
           # hajimari.io/enable: "true"
@@ -50,6 +51,7 @@ spec:
         tls:
           - hosts:
               - "plex-test.${SECRET_DOMAIN}"
+            secretName: "plex-tls"
     persistence:
       config:
         enabled: true
