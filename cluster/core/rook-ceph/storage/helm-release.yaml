@@ -60,6 +60,7 @@ spec:
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           cert-manager.io/cluster-issuer: letsencrypt-production
+          test-annotation: test-value
         host:
           name: "rook.${SECRET_DOMAIN}"
           path: "/"
