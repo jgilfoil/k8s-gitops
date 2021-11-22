@@ -22,6 +22,7 @@ spec:
           sources:
           - custom
           - pci
+          - usb
           custom:
           - name: "intel-gpu"
             matchOn:
