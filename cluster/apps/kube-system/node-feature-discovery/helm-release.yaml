@@ -25,6 +25,7 @@ spec:
         core:
           sources:
           - custom
+          - pci
           custom:
           - name: "intel-gpu"
             matchOn:
