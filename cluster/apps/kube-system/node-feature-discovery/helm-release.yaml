@@ -31,4 +31,3 @@ spec:
             - pciId:
                 class: ["0300"]
                 vendor: ["8086"]
-
