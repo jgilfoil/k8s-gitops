@@ -21,7 +21,6 @@ spec:
         core:
           sources:
           - custom
-          - pci
         sources:
           custom:
           - name: "intel-gpu"
