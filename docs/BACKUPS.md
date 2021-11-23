@@ -1,6 +1,8 @@
 # Backup and Restores
 
-## Service Backups
+## Services
+
+### Service Backups
 Backups are handled by velero. They run nightly and will backup any pods and pvcs attached to pods that are annotated properly. Be sure to properly labeel the resources for the app so they can be selectively restored. See below example:
 
 ```
@@ -19,7 +21,7 @@ spec:
 ```
 This value on the annotation should be the name of the volume you wish to backup.
 
-## Service Restores
+### Service Restores
 Restores must be done for the pod and the volume at the same time. Best option is to pause the flux syncing for the resource, delete the resources associated with the app and then initiate a restore with the below command
 ```
 velero restore create --from-backup velero-daily-backup-20211013060052 --restore-volumes=true --include-namespaces default -l app=kubia
@@ -30,7 +32,7 @@ Specify the namespace the app is located in, and the label selectors on the appl
 
 Taken from [Onedr0p's guide](https://onedr0p.github.io/home-cluster/storage/rook-pvc-backup/).
 
-## Create the toolbox container
+### Create the toolbox container
 
 !!! info "Ran from your workstation"
 
@@ -44,7 +46,7 @@ kubectl -n rook-ceph exec -it $(kubectl -n rook-ceph get pod -l "app=rook-direct
 mkdir -p /mnt/data
 ```
 
-## Move data to a NFS share or vice versa
+### Move data to a NFS share or vice versa
 
 !!! info "Ran from your workstation"
 
