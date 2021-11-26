@@ -115,7 +115,7 @@ spec:
                 logo: "https://raw.githubusercontent.com/NX211/homer-icons/7e25ff430c87accb39b8b39ddb2e9617f46d6fb1/png/plex.png"
                 subtitle: "Movies, TV, and Audio Books"
                 tag: "App"
-                url: "https://plex.apostoli.pw:32400/web"
+                url: "https://plex.apostoli.pw"
                 target: "_plex"
               - name: "Medusa"
                 logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/medusa.png"
