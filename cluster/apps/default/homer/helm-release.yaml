@@ -42,9 +42,8 @@ spec:
         existingClaim: homer-config
         mountPath: /www/assets
     configmap:
-      enabled: true
       config:
-        enabled: false
+        enabled: true
         data:
           config.yml: |
             ---
