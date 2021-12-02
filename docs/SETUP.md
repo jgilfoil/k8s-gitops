@@ -354,6 +354,16 @@ There's also a couple Github workflows included in this repository that will hel
 - [Renovate schedule](./.github/workflows/renovate-schedule.yaml) - workflow to annotate `HelmRelease`'s which allows [Renovate](https://www.whitesourcesoftware.com/free-developer-tools/renovate) to track Helm chart versions.
 
 
+## Storage
+
+### Rook-Ceph
+
+If you rebuild the entire cluster, you'll need to grab the newly generated password from the cluster and store this in your password store.
+
+```sh
+kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
+```
+
 ## Media
 
 ### NFS Setup
