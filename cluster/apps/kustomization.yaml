@@ -9,3 +9,4 @@ resources:
 - flux-system
 - velero
 - media
+- vpn-gateway

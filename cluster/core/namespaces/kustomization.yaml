@@ -7,3 +7,5 @@ resources:
 - rook-ceph.yaml
 - velero.yaml
 - media.yaml
+- vpn-gateway.yaml
+- vpn-routed-namespace.yaml
