@@ -15,46 +15,9 @@ spec:
         kind: HelmRepository
         name: rook-ceph-charts
         namespace: flux-system
+  dependsOn:
+    - name: rook-ceph
   values:
-    placement:
-      all:
-        tolerations:
-          - operator: "Exists"
-    crashCollector:
-      disable: false
-      daysToRetain: 30
-    dashboard:
-      enabled: false
-      port: 7000
-      ssl: true
-    resources:
-      mon:
-        requests:
-          cpu: 35m
-          memory: 800Mi
-        limits:
-          memory: 1024Mi
-      osd:
-        requests:
-          cpu: 35m
-          memory: 2048Mi
-        limits:
-          memory: 4096Mi
-    storage:
-      useAllNodes: false
-      useAllDevices: false
-      config:
-        osdsPerDevice: "1"
-      nodes:
-        - name: "odroid-01"
-          devices:
-            - name: "sda"
-        - name: "odroid-02"
-          devices:
-            - name: "sda"
-        - name: "odroid-03"
-          devices:
-            - name: "sda"
     ingress:
       dashboard:
         annotations:
@@ -68,3 +31,22 @@ spec:
           - secretName: "rook-dashboard-tls"
             hosts:
               - "rook.${SECRET_DOMAIN}"
+    cephClusterSpec:
+      dashboard:
+        enabled: true
+        urlPrefix: / 
+      storage:
+        useAllNodes: false
+        useAllDevices: false
+        config:
+          osdsPerDevice: "1"
+        nodes:
+          - name: "odroid-01"
+            devices:
+              - name: "sda"
+          - name: "odroid-02"
+            devices:
+              - name: "sda"
+          - name: "odroid-03"
+            devices:
+              - name: "sda"
