@@ -34,7 +34,7 @@ spec:
     cephClusterSpec:
       dashboard:
         enabled: true
-        urlPrefix: / 
+        urlPrefix: /
       storage:
         useAllNodes: false
         useAllDevices: false
