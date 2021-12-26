@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: terminal
-  namespace: vpn-routed-namespace
+  #namespace: vpn-routed-namespace
   labels:
     app: terminal
 spec:
