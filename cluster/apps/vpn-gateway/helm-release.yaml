@@ -29,43 +29,45 @@ spec:
     image:
       repository: ghcr.io/k8s-at-home/pod-gateway
       tag: v1.4.0
-    # addons:
-    #   vpn:
-    #     enabled: true
-    #     type: openvpn
-    #     env:
-    #       TZ: "America/New_York"
-    #     configFileSecret: vpn-gateway-vpnconfig
-    #     resources:
-    #       requests:
-    #         cpu: 100m
-    #         memory: 128Mi
-    #       limits:
-    #         memory: 512Mi
-    #     livenessProbe:
-    #       exec:
-    #         command:
-    #           - sh
-    #           - -c
-    #           - if [ $(curl -s https://ipinfo.io/country) = '${VPN_COUNTRY}' ]; then exit 0; else exit $?; fi
-    #       initialDelaySeconds: 30
-    #       periodSeconds: 60
-    #       failureThreshold: 1
-    #     networkPolicy:
-    #       enabled: true
-    #       egress:
-    #         - to:
-    #             - ipBlock:
-    #                 cidr: 0.0.0.0/0
-    #           ports:
-    #             # VPN traffic
-    #             - port: ${VPN_GATEWAY_VPN_PORT}
-    #               protocol: UDP
-    #         - to:
-    #             - ipBlock:
-    #                 cidr: ${NETWORK_K8S_CLUSTER_CIDR}
-    #             - ipBlock:
-    #                 cidr: ${NETWORK_K8S_SERVICE_CIDR}
+    addons:
+      vpn:
+        enabled: true
+        type: openvpn
+        openvpn:
+          image:
+            repository: dperson/openvpn-client
+            pullPolicy: Allways
+            tag: latest
+
+        configFileSecret: vpn-gateway-vpnconfig
+
+        livenessProbe:
+          exec:
+            command:
+              - sh
+              - -c
+              - if [ $(wget -q -O- https://ipinfo.io/country) == 'NL' ]; then exit 0; else exit $?; fi
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          failureThreshold: 3
+
+        networkPolicy:
+          enabled: true
+
+          egress:
+            - to:
+              - ipBlock:
+                  cidr: 0.0.0.0/0
+              ports:
+              # VPN traffic
+              - port: 443
+                protocol: UDP
+            - to:
+              - ipBlock:
+                  cidr: 10.42.0.0/16
+              - ipBlock:
+                  cidr: 10.43.0.0/16
+
 
     # publicPorts:
     #   - hostname: qbittorrent
