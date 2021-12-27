@@ -15,6 +15,8 @@ spec:
     metadata:
       labels:
         app: terminal
+      annotations:
+        setGateway: "true"
     spec:
       containers:
       - name: alpine
@@ -26,4 +28,3 @@ spec:
           sleep 600 &
           wait $!;
           done
-# try comparing ip route output from this namespace and this deployment in the default namespace.
