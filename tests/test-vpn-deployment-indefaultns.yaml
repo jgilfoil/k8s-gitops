@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: terminal
-  #namespace: vpn-routed-namespace
+  namespace: default
   labels:
     app: terminal
 spec:
@@ -26,3 +26,4 @@ spec:
           sleep 600 &
           wait $!;
           done
+# try comparing ip route output from this namespace and this deployment in the default namespace.

@@ -4,4 +4,4 @@ kind: Namespace
 metadata:
   name: vpn-routed-namespace
   labels:
-    routed-gateway: "true"
+    vpn-routed-gateway: "true"
