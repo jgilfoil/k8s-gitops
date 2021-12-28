@@ -39,7 +39,7 @@ spec:
             pullPolicy: Allways
             tag: latest
 
-        # configFileSecret: vpn-gateway-vpnconfig
+        configFileSecret: vpn-gateway-vpnconfig
 
         livenessProbe:
           exec:
