@@ -8,4 +8,3 @@ resources:
 - velero.yaml
 - media.yaml
 - vpn-gateway.yaml
-- vpn-routed-namespace.yaml
