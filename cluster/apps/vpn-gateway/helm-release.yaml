@@ -46,7 +46,7 @@ spec:
             command:
               - sh
               - -c
-              - if [ $(wget -q -O- https://ipinfo.io/country) == 'NL' ]; then exit 0; else exit $?; fi
+              - if [ $(wget -q -O- http://ipinfo.io/country) == 'NL' ]; then exit 0; else exit $?; fi
           initialDelaySeconds: 30
           periodSeconds: 90
           failureThreshold: 3
