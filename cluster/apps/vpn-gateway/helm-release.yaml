@@ -19,7 +19,7 @@ spec:
   # See https://github.com/k8s-at-home/charts/blob/master/charts/pod-gateway/values.yaml
   values:
     routed_namespaces:
-      - vpn-routed-namespace
+      - media
     settings:
       # VPN_INTERFACE: wg0
       VPN_BLOCK_OTHER_TRAFFIC: true
