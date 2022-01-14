@@ -2,8 +2,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: terminal
-  namespace: vpn-routed-namespace
+  name: novpn
+  namespace: media
   labels:
     app: terminal
 spec:
@@ -15,8 +15,8 @@ spec:
     metadata:
       labels:
         app: terminal
-      annotations:
-        setGateway: "true"
+      # annotations:
+      #   setGateway: "true"
     spec:
       containers:
       - name: alpine
@@ -28,4 +28,3 @@ spec:
           sleep 600 &
           wait $!;
           done
-# try comparing ip route output from this namespace and this deployment in the default namespace.
