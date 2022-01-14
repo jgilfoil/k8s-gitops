@@ -9,3 +9,5 @@ kubeconfig
 .decrypted~*.yaml
 # Logs
 *.log
+# temp files
+temp/
