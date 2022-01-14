@@ -1,0 +1,83 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: transmission
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: transmission
+      version: 8.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/k8s-at-home/transmission
+      tag: v3.00
+      pullPolicy: IfNotPresent
+    env:
+      TZ: "America/New_York"
+      TRANSMISSION_RPC_PASSWORD: "${SECRET_TRANSMISSION_RPC_PASSWORD}"
+      TRANSMISSION_DOWNLOAD_DIR: /downloads/complete
+    service:
+      main:
+        type: LoadBalancer
+        externalIPs:
+          - "${SVC_TRANSMISSION_ADDR}"
+        externalTrafficPolicy: Local
+        annotations:
+          traefik.ingress.kubernetes.io/service.serversscheme: https
+        # ports:
+        #   http:
+        #     port: 9091
+      utptcp:
+        enabled: false
+        type: ClusterIP
+        ports:
+          utptcp:
+            enabled: true
+            port: 51413
+            protocol: TCP
+            targetPort: 51413
+      utpudp:
+        enabled: false
+        type: ClusterIP
+        ports:
+          utpudp:
+            enabled: true
+            port: 51413
+            protocol: UDP
+            targetPort: 51413
+    probes:
+      liveness:
+        spec:
+          timeoutSeconds: 30
+      readiness:
+        spec:
+          timeoutSeconds: 30
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          # hajimari.io/enable: "true"
+          # hajimari.io/icon: "transmission"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          setGateway: "true"
+    persistence:
+      config:
+        enabled: false
+        mountPath: /config
+      downloads:
+        enabled: false
+        mountPath: /downloads
+      watch:
+        enabled: false
+        mountPath: /watch
