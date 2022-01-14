@@ -54,13 +54,6 @@ spec:
             port: 51413
             protocol: UDP
             targetPort: 51413
-    probes:
-      liveness:
-        spec:
-          timeoutSeconds: 30
-      readiness:
-        spec:
-          timeoutSeconds: 30
     ingress:
       main:
         enabled: true
@@ -70,7 +63,7 @@ spec:
           # hajimari.io/enable: "true"
           # hajimari.io/icon: "transmission"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          setGateway: "true"
+          # setGateway: "true"
         hosts:
           - host: "transmission.${SECRET_DOMAIN}"
             paths:
@@ -80,6 +73,13 @@ spec:
           - hosts:
               - "transmission.${SECRET_DOMAIN}"
             secretName: "transmission-tls"
+    probes:
+      liveness:
+        spec:
+          timeoutSeconds: 30
+      readiness:
+        spec:
+          timeoutSeconds: 30
     persistence:
       config:
         enabled: false
