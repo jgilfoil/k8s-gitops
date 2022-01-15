@@ -33,9 +33,9 @@ spec:
         externalTrafficPolicy: Local
         annotations:
           traefik.ingress.kubernetes.io/service.serversscheme: https
-        # ports:
-        #   http:
-        #     port: 9091
+        ports:
+          http:
+            port: 9091
       utptcp:
         enabled: false
         type: ClusterIP
