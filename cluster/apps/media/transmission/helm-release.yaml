@@ -63,7 +63,7 @@ spec:
           # hajimari.io/enable: "true"
           # hajimari.io/icon: "transmission"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          # setGateway: "true"
+          setGateway: "true"
         hosts:
           - host: "transmission.${SECRET_DOMAIN}"
             paths:
