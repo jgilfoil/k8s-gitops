@@ -32,7 +32,7 @@ spec:
           - "${SVC_TRANSMISSION_ADDR}"
         externalTrafficPolicy: Local
         annotations:
-          traefik.ingress.kubernetes.io/service.serversscheme: https
+          traefik.ingress.kubernetes.io/service.serversscheme: http
         ports:
           http:
             port: 9091
