@@ -94,7 +94,7 @@ spec:
         mountPath: /watch
     initContainers:
       custom-webui:
-        name: custom-webui
+        # name: custom-webui
         image: curlimages/curl:7.76.1
         command:
           - "/bin/sh"
