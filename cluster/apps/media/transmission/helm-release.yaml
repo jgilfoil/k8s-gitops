@@ -72,6 +72,26 @@ spec:
           - hosts:
               - "transmission.${SECRET_DOMAIN}"
             secretName: "transmission-tls"
+    persistence:
+      config:
+        enabled: true
+        existingClaim: transmission-config-v1
+        mountPath: /config
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${NAS_ADDR}"
+            path: /volume2/Media/
+        mountPath: /media
+        readOnly: false
+      downloads:
+        enabled: false
+        mountPath: /downloads
+      watch:
+        enabled: false
+        mountPath: /watch
     podAnnotations:
       # backup.velero.io/backup-volumes: config
       setGateway: "true"
@@ -82,16 +102,6 @@ spec:
       readiness:
         spec:
           timeoutSeconds: 30
-    persistence:
-      config:
-        enabled: false
-        mountPath: /config
-      downloads:
-        enabled: false
-        mountPath: /downloads
-      watch:
-        enabled: false
-        mountPath: /watch
     # initContainers:
     #   custom-webui:
     #     name: custom-webui
