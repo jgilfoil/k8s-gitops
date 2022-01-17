@@ -101,8 +101,8 @@ spec:
           - "-c"
           - "curl -o- -sL https://github.com/johman10/flood-for-transmission/releases/download/latest/flood-for-transmission.tar.gz | tar xzf - -C /config"
         volumeMounts:
-        - name: config
-          mountPath: /config
+          - name: config
+            mountPath: /config
         securityContext:
           runAsUser: 568
           runAsGroup: 568
