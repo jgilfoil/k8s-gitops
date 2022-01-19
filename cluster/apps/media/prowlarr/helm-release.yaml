@@ -37,6 +37,7 @@ spec:
         tls:
           - hosts:
               - "prowlarr.${SECRET_PUBLIC_DOMAIN}"
+            secretName: "prowlarr-tls"
     persistence:
       config:
         enabled: true
@@ -47,3 +48,6 @@ spec:
         cpu: 100m
       limits:
         memory: 500Mi
+    podAnnotations:
+      # backup.velero.io/backup-volumes: config
+      setGateway: "true"
