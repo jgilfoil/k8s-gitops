@@ -24,7 +24,7 @@ spec:
     env:
       TZ: "America/New_York"
       TRANSMISSION_RPC_PASSWORD: "${SECRET_TRANSMISSION_RPC_PASSWORD}"
-      TRANSMISSION_DOWNLOAD_DIR: /downloads/complete
+      TRANSMISSION_DOWNLOAD_DIR: /media/Downloads/transmission_complete
     service:
       main:
         type: LoadBalancer

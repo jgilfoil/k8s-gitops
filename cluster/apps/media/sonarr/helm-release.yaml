@@ -22,7 +22,6 @@ spec:
       tag: v3.0.6.1342
     env:
       TZ: "America/New_York"
-      TRANSMISSION_DOWNLOAD_DIR: /media/Downloads/transmission_complete
     ingress:
       main:
         enabled: true
