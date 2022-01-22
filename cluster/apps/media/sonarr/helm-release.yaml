@@ -62,7 +62,7 @@ spec:
           configMap:
             name: sonarr-reverse-symlink
             items:
-              - key: data
+              - key: reverse-symlink.sh
                 path: reverse-symlink.sh
         mountPath: /config/scripts/
     resources:
