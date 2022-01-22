@@ -58,7 +58,7 @@ spec:
       reverse-symlink:
         enabled: true
         type: configMap
-        name: reverse-symlink-script
+        name: reverse-symlink
         mountPath: /config/scripts/
         subPath: reverse-symlink.sh
     resources:
