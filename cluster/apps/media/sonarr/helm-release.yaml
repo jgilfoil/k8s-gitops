@@ -57,10 +57,14 @@ spec:
         mountPath: /media
       reverse-symlink:
         enabled: true
-        type: configMap
-        name: sonarr-reverse-symlink
+        type: custom
+        volumeSpec: 
+          configMap:
+            name: sonarr-reverse-symlink
+            items:
+              - key: data
+                path: reverse-symlink.sh
         mountPath: /config/scripts/
-        subPath: reverse-symlink.sh
     resources:
       requests:
         memory: 250Mi
