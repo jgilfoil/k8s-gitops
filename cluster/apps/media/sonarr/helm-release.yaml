@@ -58,7 +58,7 @@ spec:
       reverse-symlink:
         enabled: true
         type: custom
-        volumeSpec: 
+        volumeSpec:
           configMap:
             name: sonarr-reverse-symlink
             items:
