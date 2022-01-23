@@ -4,3 +4,11 @@ kind: Kustomization
 resources:
   - config-pvc.yaml
   - helm-release.yaml
+configMapGenerator:
+  - name: reverse-symlink
+    files:
+      - "reverse-symlink.sh"
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
