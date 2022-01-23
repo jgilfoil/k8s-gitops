@@ -59,7 +59,7 @@ spec:
         enabled: true
         type: configMap
         name: sonarr-reverse-symlink
-        defaultMode: 777
+        defaultMode: 0777
         items:
           - key: reverse-symlink.sh
             path: /config/scripts/reverse-symlink.sh
