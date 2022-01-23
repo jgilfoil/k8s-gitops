@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - config-pvc.yaml
   - helm-release.yaml
+namespace: media
 configMapGenerator:
   - name: reverse-symlink
     files:
