@@ -55,14 +55,11 @@ spec:
             server: "${NAS_ADDR}"
             path: /volume2/Media
         mountPath: /media
-      reverse-symlink:
+      scripts:
         enabled: true
         type: configMap
         name: sonarr-reverse-symlink
         defaultMode: 0777
-        items:
-          - key: reverse-symlink.sh
-            path: reverse-symlink.sh
     resources:
       requests:
         memory: 250Mi
