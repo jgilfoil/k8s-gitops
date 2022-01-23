@@ -62,7 +62,7 @@ spec:
         defaultMode: 0777
         items:
           - key: reverse-symlink.sh
-            path: /config/scripts/reverse-symlink.sh
+            path: reverse-symlink.sh
     resources:
       requests:
         memory: 250Mi
