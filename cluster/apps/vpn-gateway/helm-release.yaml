@@ -67,15 +67,15 @@ spec:
                 - ipBlock:
                     cidr: 10.43.0.0/16
 
+    publicPorts:
+      - hostname: transmission
+        IP: 10 # must be an integer between 2 and VXLAN_GATEWAY_FIRST_DYNAMIC_IP (20 by default)
+        ports:
+          - type: tcp
+            port: 27071
+          - type: udp
+            port: 27071
 
-    # publicPorts:
-    #   - hostname: qbittorrent
-    #     IP: 10
-    #     ports:
-    #       - type: tcp
-    #         port: ${VPN_FORWARDED_PORT_1}
-    #       - type: udp
-    #         port: ${VPN_FORWARDED_PORT_1}
     webhook:
       image:
         repository: ghcr.io/k8s-at-home/gateway-admision-controller
