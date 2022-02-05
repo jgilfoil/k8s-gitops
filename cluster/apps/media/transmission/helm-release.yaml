@@ -25,7 +25,7 @@ spec:
     env:
       TZ: "America/New_York"
       TRANSMISSION_RPC_PASSWORD: "${SECRET_TRANSMISSION_RPC_PASSWORD}"
-      TRANSMISSION_DOWNLOAD_DIR: /media/Downloads/transmission_complete
+      TRANSMISSION_DOWNLOAD_DIR: /downloads
     service:
       main:
         type: LoadBalancer
@@ -88,7 +88,8 @@ spec:
         mountPath: /media
         readOnly: false
       downloads:
-        enabled: false
+        enabled: true
+        existingClaim: transmission-downloads-v1
         mountPath: /downloads
       watch:
         enabled: false
