@@ -162,3 +162,23 @@ Resume flux syncing
 ```
 flux resume hr plex -n media
 ```
+
+## NAS Backups
+
+This is just to document what i'm doing with all my different NAS Volumes with respect to backups in the event that the NAS needs to be restored.
+
+ * Synology Configuration file (.dss) is currently manually exported periodically and uploaded to Google Drive\Backups
+ * Minio docker config is backuped to to `Backup` Volume on NAS. See [here](https://github.com/jgilfoil/k8s-gitops/blob/main/minio/README.md#deploying-minio) for more details
+ * Volume `Backup` is replicated to RAID Array on Forge and external usb storage
+ * Volume `cluster-backup` is sync'd to Google Drive\Backups via Synology Cloud Sync, in addition to local RAID Array on Forge
+ * Volume `docker` is not backed up. I think this is used to store container images.
+ * Volume `Documents` is synce'd to Google Drive\Backups via Synology Cloud Sync, in addition to local RAID Array on Forge
+ * Volume `Logs` is not backed up. This is just reports from Synology on the system.
+ * Volume `Software` is replicated to RAID Array on Forge and external usb storage
+ * Volume `vm-backups` is replicated to RAID Array on Forge and external usb storage
+
+I Believe a restore procedure would look something like this:
+
+ * Import .dss config file from Google Drive\Backups
+ * Restore data to volumes from their various backup sources
+ * Do a cloud Sync Restore from google drive to `cluster-backup` and `Documents` volumes
