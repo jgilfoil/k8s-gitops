@@ -182,3 +182,4 @@ I Believe a restore procedure would look something like this:
  * Import .dss config file from Google Drive\Backups
  * Restore data to volumes from their various backup sources
  * Do a cloud Sync Restore from google drive to `cluster-backup` and `Documents` volumes
+ * Restore minio docker instance from the configuration bacup json file
