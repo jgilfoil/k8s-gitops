@@ -26,6 +26,9 @@ spec:
       TZ: "America/New_York"
       TRANSMISSION_RPC_PASSWORD: "${SECRET_TRANSMISSION_RPC_PASSWORD}"
       TRANSMISSION_DOWNLOAD_DIR: /downloads
+      TRANSMISSION_SPEED_LIMIT_UP: 200
+      TRANSMISSION_SPEED_LIMIT_UP_ENABLED: true
+      TRANSMISSION_PEER_PORT: 27071
     service:
       main:
         type: LoadBalancer
