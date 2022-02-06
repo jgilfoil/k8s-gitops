@@ -37,6 +37,15 @@ spec:
         ports:
           http:
             port: 9091
+      bittorrent:
+        enabled: true
+        type: ClusterIP
+        ports:
+          bittorrent:
+            enabled: true
+            port: 27071
+            protocol: TCP
+            targetPort: 27071
       utptcp:
         enabled: false
         type: ClusterIP
