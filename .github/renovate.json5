@@ -11,33 +11,30 @@
   "commitMessageExtra": "to {{newVersion}}",
   "commitMessageSuffix": "",
   // set up Renovate Managers
-  "helmv3": {
-    "fileMatch": ["charts/.+/Chart\\.yaml$"]
+  "flux": {
+    "fileMatch": [
+      "cluster/.+\\.ya?ml$"
+    ]
   },
   "helm-values": {
-    "fileMatch": ["cluster/.+/helm-release\\.yaml$"]
+    "fileMatch": [
+      "cluster/.+\\.ya?ml$"
+    ]
+  },
+  "helmv3": {
+    "fileMatch": [
+      "charts/.+/Chart\\.ya?ml$"
+    ]
   },
   "kubernetes": {
     "fileMatch": [
-      "cluster/.+\\.yaml$",
-      "server/.+\\.yaml$"
+      "cluster/.+\\.ya?ml$"
     ],
     "ignorePaths": [
-      "cluster/base/"
+      "cluster/.+/gotk-components\\.ya?ml$"
     ]
   },
   "regexManagers": [
-    // regexManager to read and process HelmReleases
-    {
-      "fileMatch": [
-        "cluster/.+\\.yaml$"
-      ],
-      "matchStrings": [
-        // helm releases
-        "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
-      ],
-      "datasourceTemplate": "helm"
-    },
     // regexManager to read and process cert-manager CRD's
     {
       "fileMatch": [
