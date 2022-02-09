@@ -54,6 +54,10 @@ spec:
             server: "${NAS_ADDR}"
             path: /volume2/Media
         mountPath: /media
+      downloads:
+        enabled: true
+        existingClaim: transmission-downloads-v1
+        mountPath: /downloads
       scripts:
         enabled: true
         type: configMap
