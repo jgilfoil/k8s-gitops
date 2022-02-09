@@ -56,7 +56,11 @@ spec:
         mountPath: /media
       downloads:
         enabled: true
-        existingClaim: transmission-downloads-v1
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${NAS_ADDR}"
+            path: /volume9/downloads
         mountPath: /downloads
       scripts:
         enabled: true
