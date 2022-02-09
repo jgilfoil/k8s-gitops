@@ -51,6 +51,8 @@ spec:
               mountPath: /mnt/nas-media-data
             - name: nas-backup-data
               mountPath: /mnt/nas-backup-data
+            - name: nas-downloads-data
+              mountPath: /mnt/nas-downloads-data
             - name: direct-mount-scripts
               mountPath: /scripts
       # if hostNetwork: false, the "rbd map" command hangs, see https://github.com/rook/rook/issues/2021
@@ -79,6 +81,10 @@ spec:
           nfs:
             server: "${NAS_ADDR}"
             path: /volume1/Backup
+        - name: nas-downloads-data
+          nfs:
+            server: "${NAS_ADDR}"
+            path: /volume9/downloads
         - name: direct-mount-scripts
           projected:
             defaultMode: 0775
