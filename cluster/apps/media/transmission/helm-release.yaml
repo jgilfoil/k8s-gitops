@@ -119,7 +119,7 @@ spec:
         enabled: false
         mountPath: /watch
     podAnnotations:
-      backup.velero.io/backup-volumes: config,downloads
+      backup.velero.io/backup-volumes: config
       setGateway: "true"
     probes:
       liveness:
