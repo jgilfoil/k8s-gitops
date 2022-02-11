@@ -22,16 +22,16 @@ spec:
               command: ["/bin/sh"]
               args: ["-c", "tar czf /backups/containers/transmission/downloads-$(date +'%y-%m').tar /downloads"]
               volumeMounts:
-              - name: backups
-                mountPath: /backups
-              - name: downloads
-                mountPath: /downloads
+                - name: backups
+                  mountPath: /backups
+                - name: downloads
+                  mountPath: /downloads
           volumes:
-          - name: backups
-            nfs:
-              server: "${Nas}"
-              path: /volume1/Backup
-          - name: downloads
-            nfs:
-              server: "${Nas}"
-              path: /volume9/downloads
+            - name: backups
+              nfs:
+                server: "${Nas}"
+                path: /volume1/Backup
+            - name: downloads
+              nfs:
+                server: "${Nas}"
+                path: /volume9/downloads
