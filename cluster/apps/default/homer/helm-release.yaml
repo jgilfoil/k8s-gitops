@@ -19,6 +19,8 @@ spec:
       repository: b4bz/homer
       tag: 21.09.2
       pullPolicy: IfNotPresent
+    podLabels:
+      app: homer
     ingress:
       main:
         enabled: true
