@@ -3,8 +3,8 @@
 PERMPATH="$sonarr_episodefile_path"
 LINKPATH="$sonarr_episodefile_sourcepath"
 
-echo "LINKPATH=$LINKPATH"
-echo "PERMPATH=$PERMPATH"
+echo "LINKPATH=$LINKPATH" >> /config/logs/script.log
+echo "PERMPATH=$PERMPATH" >> /config/logs/script.log
 
 if [[ -f "$LINKPATH" ]]; then
     sleep 1
