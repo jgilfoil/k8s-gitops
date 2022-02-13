@@ -3,6 +3,9 @@
 PERMPATH="$sonarr_episodefile_path"
 LINKPATH="$sonarr_episodefile_sourcepath"
 
+echo "LINKPATH=$LINKPATH"
+echo "PERMPATH=$PERMPATH"
+
 if [[ -f "$LINKPATH" ]]; then
     sleep 1
 else
