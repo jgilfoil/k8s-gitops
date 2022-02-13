@@ -5,6 +5,7 @@ resources:
   - plex
   - transmission
   - sonarr
+  - radarr
   - prowlarr
   - overseerr
   - downloads-backup
