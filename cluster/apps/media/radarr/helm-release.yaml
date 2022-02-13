@@ -64,6 +64,11 @@ spec:
             server: "${NAS_ADDR}"
             path: /volume9/downloads
         mountPath: /downloads
+      scripts:
+        enabled: true
+        type: configMap
+        name: reverse-symlink-radarr
+        defaultMode: 0777
     resources:
       requests:
         memory: 250Mi
