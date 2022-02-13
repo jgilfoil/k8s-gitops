@@ -6,4 +6,5 @@ resources:
   - transmission
   - sonarr
   - prowlarr
+  - overseerr
   - downloads-backup
