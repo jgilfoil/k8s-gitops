@@ -1,6 +1,9 @@
 #!/usr/bin/bash
 radarr_label="Movies"
 
+echo "radarr_moviefile_sourcepath: $radarr_moviefile_sourcepath" >> /config/logs/symlink.log
+echo "radarr_moviefile_path: $radarr_moviefile_path" >> /config/logs/symlink.log
+
 # Make sure we're working on torrents.
 if ! [[ "${radarr_moviefile_sourcepath}" =~ radarr ]]; then
   echo "[Torrent Symlink] Path ${radarr_moviefile_sourcepath} does not contain \"torrent\", exiting." >> /config/logs/symlink.log
