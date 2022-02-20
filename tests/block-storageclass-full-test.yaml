@@ -38,6 +38,8 @@ spec:
   selector:
     matchLabels:
       app: kubia
+  strategy:
+    type: Recreate
   template:
     metadata:
       name: kubia
@@ -74,6 +76,8 @@ spec:
       - name: custom
         persistentVolumeClaim:
           claimName: kubia-sc-claim-custom
+      nodeSelector:
+          kubernetes.io/hostname: odroid-01
 ---
 apiVersion: v1
 kind: Service
