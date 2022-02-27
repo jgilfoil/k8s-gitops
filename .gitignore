@@ -11,3 +11,5 @@ kubeconfig
 *.log
 # temp files
 temp/
+# Terraform files
+.terraform

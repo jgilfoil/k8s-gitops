@@ -24,21 +24,14 @@ https://hub.docker.com/r/minio/minio/
   - command: minio server /data --console-address :9001
   - env var: MINIO_ROOT_USER: <minio username in safe>
   - env var: MINIO_ROOT_PASSWORD: <minio password in safe>
- 6. configure the user, policy and bucket from the control vm:
-
-```
-mc alias set minio http://wanshitong.apostoli.pw:9000 <MINIO_ROOT_USER> "<MINIO_ROOT_PASSWORD>"
-mc admin user add minio/ <K8s Backups Access Key> <Secret Key>
-mc admin policy add minio/ k8sbackupreadwrite ./minio/k8s-backups-read-write.json
-mc admin policy set minio k8sbackupreadwrite user=<K8s Backups Access Key>
-mc alias set minio-k8sbackup http://wanshitong.apostoli.pw:9000 <K8s Backups Access Key> <Secret Key>
-mc mb minio-k8sbackup/k8sbackups
-```
+ 6. apply terraform configuration in `./terraform` directory. The backend is stored in terraform cloud, so you must do terraform login prior to running apply.
 
 ## Restore Procedures
 In the event that the Minio container is no longer operational or is corrupted somehow, as long as you have a copy of the data and the configs from the cluster-block-backups volume on the NAS, you can follow these restore procedures.
 
-
 ```
-
+Restore minio container and config
+copy data over from backup
+profit??
+this is untested as of yet
 ```
