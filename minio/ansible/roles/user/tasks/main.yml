@@ -1,0 +1,73 @@
+---
+  # log in
+- name: try login in as user with my password
+  command: sshpass -p "{{ my_remote_password }}" ssh -q -l {{ my_remote_user }} "{{ ansible_host }}" -o PreferredAuthentications=password -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=1 echo "Worked"
+  register: ansible_check_connect_user_pwd
+  connection: local
+  ignore_errors: true
+  changed_when: False
+
+- name: if password worked, use it
+  connection: local
+  set_fact:
+    ansible_ssh_pass: "{{ my_remote_password }}"
+    ansible_sudo_pass: "{{ my_remote_password }}"
+  when: ansible_check_connect_user_pwd is succeeded
+- name: gather facts
+  become: true
+  setup:
+
+# retrieve current list of administrators
+- name: get list of administrators from /etc/group file
+  become: true
+  shell: cat /etc/group | grep administrators | sed 's/.*://'
+  register: administrators
+- name: split list of administrators
+  set_fact:
+    administrators_list: "{{ administrators.stdout.split(',') }}"
+- name: print list of administrators
+  debug:
+    msg: "{{ administrators_list }}"
+
+# # create user
+# - name: read /etc/passwd file
+#   become: true
+#   shell: cat /etc/passwd
+#   register: etc_passwd
+# - name: create user ansible
+#   when: etc_passwd.stdout.find(my_ansible_username) == -1
+#   become: true
+#   # NB: args are [username pwd "full name" expired{0|1} mail AppPrivilege]
+#   # only using AppPrivilege 0x01, i.e. FTP
+#   command: /usr/syno/sbin/synouser --add {{ my_ansible_username }} "{{ my_ansible_password }}" "" 0 "" 1
+#   args:
+#     creates: "{{ synology_user_home_path }}/{{ my_ansible_username }}"
+# - name: fix user ansible home permission
+#   become: true
+#   file:
+#     path: "{{ synology_user_home_path }}/{{ my_ansible_username }}"
+#     mode: u=rwx,g=rx,o=rx
+# # add user to administrators
+# - name: add user ansible to administrators group
+#   become: true
+#   command: /usr/syno/sbin/synogroup --member administrators {{ ' '.join(administrators_list) }} {{ my_ansible_username }}
+# # give user passwordless sudo access
+# - name: give user ansible sudo access
+#   become: true
+#   lineinfile:
+#     dest: /etc/sudoers.d/ansible
+#     line: "{{ my_ansible_username }} ALL=(ALL) NOPASSWD: ALL"
+#     regexp: "^{{ my_ansible_username }}"
+#     state: present
+#     create: yes
+#     mode: 0440
+#     # NB: no visudo on this OS...
+#     # validate: '/usr/sbin/visudo -cf %s'
+# # deploy cert
+# - name: deploy ansible master certificate
+#   become: true
+#   authorized_key:
+#     state: present
+#     user: "{{ my_ansible_username }}"
+#     key: "{{ lookup('file', my_ansible_public_key_path) }}"
+#     manage_dir: yes
