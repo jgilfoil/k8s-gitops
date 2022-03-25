@@ -25,7 +25,7 @@ spec:
         tag: 1.12.1-scratch-r2
         pullPolicy: IfNotPresent
       resources:
-        limits: 
+        limits:
           cpu: "1000m"
           memory: "2Gi"
       podLabels: {}
@@ -38,7 +38,7 @@ spec:
         tag: 1.5.0-scratch-r0
         pullPolicy: latest
       resources:
-        limits: 
+        limits:
           cpu: "1000m"
           memory: "2Gi"
       podLabels: {}
