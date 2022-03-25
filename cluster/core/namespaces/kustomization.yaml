@@ -8,3 +8,4 @@ resources:
 - velero.yaml
 - media.yaml
 - vpn-gateway.yaml
+- worklab.yaml
