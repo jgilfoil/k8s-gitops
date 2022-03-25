@@ -1,0 +1,8 @@
+---
+  # log in
+- name: set passwords
+  connection: local
+  set_fact:
+    ansible_ssh_pass: "{{ my_remote_password }}"
+    ansible_sudo_pass: "{{ my_remote_password }}"
+  when: ansible_check_connect_user_pwd is succeeded

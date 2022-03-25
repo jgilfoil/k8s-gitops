@@ -63,6 +63,7 @@
 #     mode: 0440
 #     # NB: no visudo on this OS...
 #     # validate: '/usr/sbin/visudo -cf %s'
+# 
 # # deploy cert
 # - name: deploy ansible master certificate
 #   become: true
