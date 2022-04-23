@@ -1,0 +1,46 @@
+---
+
+- name: Check to see if pip is already installed.
+  command: "python -m pip --version"
+  ignore_errors: true
+  changed_when: false
+  check_mode: false
+  register: pip_is_installed
+
+- name: install pip
+  command: python3 -m ensurepip
+  when: pip_is_installed.rc != 0
+
+- name: install docker sdk
+  pip:
+    name: docker
+  
+
+- name: Create a data container
+  community.docker.docker_container:
+    name: minio-logs
+    image: minio/minio:latest
+    state: started
+    command: minio server /data --console-address :9001
+    container_default_behavior: compatibility
+    network_mode: bridge
+    ports:
+      - "11000:9000"
+      - "11001:9001"
+    env:
+        MINIO_REGION_NAME: us-east-1
+        # Values which might be parsed as numbers, booleans or other types by the YAML parser need to be quoted
+        MINIO_ROOT_PASSWORD: "{{ MINIO_LOGS_ROOT_PASSWORD }}"
+        MINIO_ROOT_USER: "{{ MINIO_LOGS_ROOT_USER }}"
+        # PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+        # container: oci
+        # MINIO_ACCESS_KEY_FILE: access_key
+        # MINIO_SECRET_KEY_FILE: secret_key
+        # MINIO_ROOT_USER_FILE: access_key
+        # MINIO_ROOT_PASSWORD_FILE: secret_key
+        # MINIO_KMS_SECRET_KEY_FILE: kms_master_key
+        # MINIO_UPDATE_MINISIGN_PUBKEY: "RWTx5Zr1tiHQLwG9keckT0c45M3AGeHD6IvimQHpyRywVWGbP1aVSGav"
+        # MINIO_CONFIG_ENV_FILE: config.env
+    volumes:
+      - /volume3/Logs/observability-minio/config:/root/.minio:rw
+      - /volume3/Logs/observability-minio/data:/data:rw
