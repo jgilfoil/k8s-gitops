@@ -70,9 +70,9 @@ spec:
     resources:
       requests:
         memory: 250Mi
-        cpu: 500m
+        cpu: 100m
       limits:
-        memory: 1500Mi
+        memory: 2000Mi
     podAnnotations:
       backup.velero.io/backup-volumes: config
       setGateway: "true"
