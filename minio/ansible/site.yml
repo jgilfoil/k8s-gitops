@@ -22,4 +22,13 @@
   become: true
 
   roles:
+    - user
+
+- name: Deploy Docker
+  hosts: synology
+  gather_facts: False
+  remote_user: "{{ my_ansible_username }}"
+  become: true
+
+  roles:
     - minio
