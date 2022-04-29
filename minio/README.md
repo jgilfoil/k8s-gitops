@@ -16,22 +16,28 @@ https://hub.docker.com/r/minio/minio/
 2. Setup a Volume to backend Minio
 3. Setup a File share using that Volume
 4. Download the Minio Container minio/minio:latest
-5. Deploy the container. The Container deployment settings are backed up in the Backup Volume:cluster/NAS/minio/cluster-backup.syno.json. Settings used were:
-  - volume mount /cluster-backup/config:/root/.minio
-  - volume mount /cluster-backup/data:/data
-  - port 9000:9000
-  - port 9001:9001
-  - command: minio server /data --console-address :9001
-  - env var: MINIO_ROOT_USER: <minio username in safe>
-  - env var: MINIO_ROOT_PASSWORD: <minio password in safe>
- 6. apply terraform configuration in `./terraform` directory. The backend is stored in terraform cloud, so you must do terraform login prior to running apply.
+5. Deploy container with Ansible
+```
+cd ansible/
+ansible-playbook site.yml
+```
+6. Configure minio buckets with Terraform. The backend is stored in terraform cloud, so you must do terraform login prior to running apply.
+```
+cd terraform/logs-bucket
+terraform init && terraform apply
+cd ../k8sbackup-bucket
+terraform init && terraform apply
+```
 
 ## Restore Procedures
-In the event that the Minio container is no longer operational or is corrupted somehow, as long as you have a copy of the data and the configs from the cluster-block-backups volume on the NAS, you can follow these restore procedures.
+In the event that the Minio container is no longer operational or is corrupted somehow, as long as you have a copy of the data and the configs from the cluster-block-backups volume on the NAS, you can follow these restore procedures. Logs volume can just be created, no need to back up that data.
 
 ```
-Restore minio container and config
+Restore minio container and config (ansible/config)
 copy data over from backup
 profit??
 this is untested as of yet
 ```
+
+## Backend
+If you're using terraform enterprise to store state, Create a workspace and set the `Execution Mode` to local, else it will try to execute your cli commands from terraform's servers and fail to decrypt or connect to your local minio instance.
