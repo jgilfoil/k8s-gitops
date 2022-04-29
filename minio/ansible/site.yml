@@ -8,9 +8,26 @@
       state: latest
     become: true
 
-- hosts: synology
+- name: Setup Access
+  hosts: synology
   remote_user: "{{ my_remote_user}}"
   gather_facts: False
-
   roles:
     - user
+
+- name: Deploy Docker
+  hosts: synology
+  gather_facts: False
+  remote_user: "{{ my_ansible_username }}"
+  become: true
+  roles:
+    - user
+
+- name: Deploy Docker
+  hosts: synology
+  gather_facts: False
+  remote_user: "{{ my_ansible_username }}"
+  become: true
+
+  roles:
+    - minio
