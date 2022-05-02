@@ -45,11 +45,11 @@ spec:
       storage_config:
         aws:
           bucketnames: loki
-          endpoint: "http://${NAS_ADDR}:9000"
-          access_key_id: "${SECRET_MINIO_ACCESS_KEY}"
-          secret_access_key: "${SECRET_MINIO_SECRET_KEY}"
+          endpoint: "http://${NAS_ADDR}:11000"
+          access_key_id: "${SECRET_MINIO_LOKI_ACCESS_KEY}"
+          secret_access_key: "${SECRET_MINIO_LOKI_SECRET_KEY}"
           s3forcepathstyle: true
-          insecure: false
+          insecure: true
         boltdb_shipper:
           active_index_directory: /data/loki/index
           cache_location: /data/loki/index_cache
