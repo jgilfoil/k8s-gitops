@@ -11,3 +11,4 @@ resources:
 - weaveworks-kured-charts.yaml
 - vmware-tanzu-charts.yaml
 - node-feature-discovery-charts.yaml
+- grafana-charts.yaml
