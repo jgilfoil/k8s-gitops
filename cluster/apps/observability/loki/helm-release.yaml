@@ -25,10 +25,7 @@ spec:
         cert-manager.io/cluster-issuer: "letsencrypt-production"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
       hosts:
-        - host: "loki.${SECRET_DOMAIN}"
-          paths:
-            - path: /
-              pathType: Prefix
+        host: "loki.${SECRET_DOMAIN}"
       tls:
         - hosts:
             - "loki.${SECRET_DOMAIN}"
