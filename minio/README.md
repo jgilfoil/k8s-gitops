@@ -41,3 +41,14 @@ this is untested as of yet
 
 ## Backend
 If you're using terraform enterprise to store state, Create a workspace and set the `Execution Mode` to local, else it will try to execute your cli commands from terraform's servers and fail to decrypt or connect to your local minio instance.
+
+## Encryption
+
+Example encrypting MINIO_LOGS_ROOT_USER in roles/minio/vars/main.yml:
+```
+ansible-vault encrypt_string 'user_name' --name 'MINIO_LOGS_ROOT_USER'
+```
+Check encrypted variable in host_vars/synology:
+```
+ansible localhost -m debug -a var="my_remote_user" -e "@host_vars/synology"
+```
