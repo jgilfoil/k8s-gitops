@@ -24,6 +24,7 @@
     command: minio server /data --console-address :9001
     container_default_behavior: compatibility
     network_mode: bridge
+    restart_policy: always
     ports:
       - "11000:9000"
       - "11001:9001"
