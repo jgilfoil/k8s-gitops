@@ -157,6 +157,12 @@ spec:
               - name: "Infra Tools"
                 icon: "fas fa-tools"
                 items:
+                  - name: "Grafana"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/grafana.png"
+                    subtitle: "Analytics and Visisualations"
+                    tag: "Tools"
+                    url: "https://grafana.apostoli.pw"
+                    target: "_grafana"
                   - name: "Rook"
                     logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/rook.png"
                     subtitle: "Rook-Ceph Storage Cluster Dashboard"
