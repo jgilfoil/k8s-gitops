@@ -17,20 +17,9 @@ spec:
       interval: 5m
   # See https://github.com/k8s-at-home/charts/blob/master/charts/pod-gateway/values.yaml
   values:
-    routed_namespaces:
-      - media
-    settings:
-      VPN_INTERFACE: wg0
-      VXLAN_ID: 43
-      VXLAN_IP_NETWORK: 172.16.1
-      VPN_BLOCK_OTHER_TRAFFIC: true
-      VPN_TRAFFIC_PORT: "${SECRET_VPN_GATEWAY_PORT}"
-      NOT_ROUTED_TO_GATEWAY_CIDRS: "10.42.0.0/16 10.43.0.0/16 172.16.0.0/12 192.168.1.0/24"
-      VPN_LOCAL_CIDRS: "172.16.0.0/12 10.42.0.0/16 10.43.0.0/16 192.168.1.0/24"
     image:
       repository: ghcr.io/k8s-at-home/pod-gateway
       tag: v1.5.0
-    DNS: 172.16.1.1
     addons:
       netshoot:
         enabled: true
@@ -41,12 +30,6 @@ spec:
           image:
             repository: ghcr.io/k8s-at-home/wireguard
             tag: v1.0.20210914
-        securityContext:
-          runAsUser: 568
-          runAsGroup: 568
-          capabilities:
-            drop:
-              - "SYS_MODULE"
         env:
           TZ: "America/New_York"
           IPTABLES_BACKEND: legacy
@@ -58,15 +41,12 @@ spec:
             memory: 128Mi
           limits:
             memory: 512Mi
-        livenessProbe:
-          exec:
-            command:
-              - sh
-              - -c
-              - if [ $(wget -q -O- http://ip-api.com/line/?fields=2) == 'NL' ]; then exit 0; else exit $?; fi
-          initialDelaySeconds: 30
-          periodSeconds: 90
-          failureThreshold: 3
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+          capabilities:
+            drop:
+              - "SYS_MODULE"
         networkPolicy:
           enabled: true
           egress:
@@ -82,6 +62,27 @@ spec:
                     cidr: 10.42.0.0/16
                 - ipBlock:
                     cidr: 10.43.0.0/16
+        # livenessProbe:
+        #   exec:
+        #     command:
+        #       - sh
+        #       - -c
+        #       - if [ $(wget -q -O- http://ip-api.com/line/?fields=2) == 'NL' ]; then exit 0; else exit $?; fi
+        #   initialDelaySeconds: 30
+        #   periodSeconds: 90
+        #   failureThreshold: 3
+    routed_namespaces:
+      - media
+    DNS: 172.16.1.1
+
+    settings:
+      VPN_INTERFACE: wg0
+      VXLAN_ID: 43
+      VXLAN_IP_NETWORK: 172.16.1
+      VPN_BLOCK_OTHER_TRAFFIC: true
+      VPN_TRAFFIC_PORT: "${SECRET_VPN_GATEWAY_PORT}"
+      NOT_ROUTED_TO_GATEWAY_CIDRS: "10.42.0.0/16 10.43.0.0/16 172.16.0.0/12 192.168.1.0/24"
+      VPN_LOCAL_CIDRS: "172.16.0.0/12 10.42.0.0/16 10.43.0.0/16 192.168.1.0/24"
     publicPorts:
       - hostname: transmission
         IP: 10 # must be an integer between 2 and VXLAN_GATEWAY_FIRST_DYNAMIC_IP (20 by default)
