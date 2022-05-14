@@ -74,23 +74,22 @@ spec:
     routed_namespaces:
       - media
     DNS: 172.16.1.1
-
     settings:
       VPN_INTERFACE: wg0
       VXLAN_ID: 43
       VXLAN_IP_NETWORK: 172.16.1
       VPN_BLOCK_OTHER_TRAFFIC: true
       VPN_TRAFFIC_PORT: "${SECRET_VPN_GATEWAY_PORT}"
-      # NOT_ROUTED_TO_GATEWAY_CIDRS: "10.42.0.0/16 10.43.0.0/16 172.16.0.0/12 192.168.1.0/24"
+      NOT_ROUTED_TO_GATEWAY_CIDRS: "10.42.0.0/16 10.43.0.0/16 172.16.0.0/12 192.168.1.0/24"
       # VPN_LOCAL_CIDRS: "172.16.0.0/12 10.42.0.0/16 10.43.0.0/16 192.168.1.0/24"
-    publicPorts:
-      - hostname: transmission
-        IP: 10 # must be an integer between 2 and VXLAN_GATEWAY_FIRST_DYNAMIC_IP (20 by default)
-        ports:
-          - type: tcp
-            port: 27071
-          - type: udp
-            port: 27071
+    # publicPorts:
+    #   - hostname: transmission
+    #     IP: 10 # must be an integer between 2 and VXLAN_GATEWAY_FIRST_DYNAMIC_IP (20 by default)
+    #     ports:
+    #       - type: tcp
+    #         port: 27071
+    #       - type: udp
+    #         port: 27071
     webhook:
       image:
         repository: ghcr.io/k8s-at-home/gateway-admision-controller
