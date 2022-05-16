@@ -67,7 +67,7 @@ spec:
             command:
               - sh
               - -c
-              - if [ $(curl -s http://ip-api.com/line/?fields=2) == 'NL' ]; then exit 0; else exit $?; fi
+              - if [ $(curl -s http://ip-api.com/line/?fields=2) = 'NL' ]; then exit 0; else exit $?; fi
           initialDelaySeconds: 30
           periodSeconds: 90
           failureThreshold: 3
