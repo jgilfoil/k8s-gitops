@@ -62,15 +62,15 @@ spec:
                     cidr: 10.42.0.0/16
                 - ipBlock:
                     cidr: 10.43.0.0/16
-        livenessProbe:
-          exec:
-            command:
-              - sh
-              - -c
-              - if [ $(wget -q -O- http://ip-api.com/line/?fields=2) == 'NL' ]; then exit 0; else exit $?; fi
-          initialDelaySeconds: 30
-          periodSeconds: 90
-          failureThreshold: 3
+        # livenessProbe:
+        #   exec:
+        #     command:
+        #       - sh
+        #       - -c
+        #       - if [ $(wget -q -O- http://ip-api.com/line/?fields=2) == 'NL' ]; then exit 0; else exit $?; fi
+        #   initialDelaySeconds: 30
+        #   periodSeconds: 90
+        #   failureThreshold: 3
     routed_namespaces:
       - media
     DNS: 172.16.1.1
