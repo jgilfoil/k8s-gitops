@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
 - default
 - networking
-# - system-upgrade
+- system-upgrade
 - kube-system
 - flux-system
 - velero
