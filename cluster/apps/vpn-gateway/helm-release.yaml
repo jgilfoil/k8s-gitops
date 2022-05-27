@@ -65,6 +65,7 @@ spec:
         livenessProbe:
           exec:
             command:
+              - touch /tmp/check.sh
               - echo "if [ $(curl -s https://ipinfo.io/country) = 'NL' ]" > /tmp/check.sh;
               - echo "then" >> /tmp/check.sh;
               - echo "  echo 'success'" >> /tmp/check.sh;
