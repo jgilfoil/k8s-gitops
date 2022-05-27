@@ -65,9 +65,16 @@ spec:
         livenessProbe:
           exec:
             command:
-              - sh
-              - -c
-              - if [ $(curl -s https://ipinfo.io/country) = 'NL' ]; then exit 0; else exit $?; fi
+              - echo "if [ $(curl -s https://ipinfo.io/country) = 'NL' ]" > /tmp/check.sh;
+              - echo "then" >> /tmp/check.sh;
+              - echo "  echo 'success'" >> /tmp/check.sh;
+              - echo "else" >> /tmp/check.sh;
+              - echo "  echo 'failure'" >> /tmp/check.sh;
+              - echo "fi" >> /tmp/check.sh;
+              - chmod 0777 /tmp/check.sh;
+              - bash
+              - c
+              - /tmp/check.sh
           initialDelaySeconds: 30
           periodSeconds: 90
           failureThreshold: 3
