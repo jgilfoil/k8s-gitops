@@ -62,12 +62,6 @@ spec:
                     cidr: 10.42.0.0/16
                 - ipBlock:
                     cidr: 10.43.0.0/16
-        livenessProbe:
-          exec:
-            command:
-              - sh
-              - -c
-              - touch /tmp/check.sh;
           initialDelaySeconds: 30
           periodSeconds: 90
           failureThreshold: 3
