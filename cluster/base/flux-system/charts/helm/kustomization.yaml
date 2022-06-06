@@ -12,3 +12,4 @@ resources:
 - vmware-tanzu-charts.yaml
 - node-feature-discovery-charts.yaml
 - grafana-charts.yaml
+- vector-charts.yaml
