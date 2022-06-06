@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: vector-agent
-  namespace: obeservability
+  namespace: observability
 spec:
   interval: 5m
   chart:
@@ -19,7 +19,7 @@ spec:
     createNamespace: true
   dependsOn:
     - name: vector-aggregator
-      namespace: obeservability
+      namespace: observability
   values:
     image:
       repository: timberio/vector
