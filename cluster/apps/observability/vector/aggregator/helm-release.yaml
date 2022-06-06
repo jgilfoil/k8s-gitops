@@ -79,8 +79,6 @@ spec:
               {{`{{ kubernetes.pod_node_name }}`}}
             pod: >-
               {{`{{ kubernetes.pod_name }}`}}
-    podMonitor:
-      enabled: true
     service:
       enabled: true
       type: LoadBalancer
