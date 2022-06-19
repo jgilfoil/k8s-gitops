@@ -5,25 +5,32 @@ metadata:
   name: vector-agent
   namespace: observability
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: vector
-      version: 0.12.0
+      version: 0.13.0
       sourceRef:
         kind: HelmRepository
         name: vector-charts
         namespace: flux-system
-      interval: 5m
+      interval: 15m
   install:
     createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
   dependsOn:
     - name: vector-aggregator
       namespace: observability
   values:
+  # Original content copied from here with edits to remove prometheus and opensense 
+  # https://github.com/onedr0p/home-ops/blob/e9a0bad87512024e6c824ca9d0890bd051dda14b/cluster/apps/monitoring/vector/agent/helm-release.yaml
     image:
       repository: timberio/vector
-      tag: 0.22.0-debian
+      tag: 0.22.2-debian
     role: Agent
     customConfig:
       data_dir: /vector-data-dir
@@ -36,6 +43,14 @@ spec:
           journal_directory: /var/log/journal
         kubernetes_logs:
           type: kubernetes_logs
+          pod_annotation_fields:
+            container_image: "container_image"
+            container_name: "container_name"
+            pod_annotations: "pod_annotations"
+            pod_labels: "pod_labels"
+            pod_name: "pod_name"
+        vector_metrics:
+          type: internal_metrics
       # Sinks
       sinks:
         loki_journal_sink:
@@ -52,8 +67,6 @@ spec:
           version: "2"
     service:
       enabled: false
-    podMonitor:
-      enabled: true
     securityContext:
       privileged: true
     tolerations:
