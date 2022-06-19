@@ -26,8 +26,8 @@ spec:
     - name: vector-aggregator
       namespace: observability
   values:
-  # Original content copied from here with edits to remove prometheus and opensense
-  # https://github.com/onedr0p/home-ops/blob/e9a0bad87512024e6c824ca9d0890bd051dda14b/cluster/apps/monitoring/vector/agent/helm-release.yaml
+    # Original content copied from here with edits to remove prometheus and opensense
+    # https://github.com/onedr0p/home-ops/blob/e9a0bad87512024e6c824ca9d0890bd051dda14b/cluster/apps/monitoring/vector/agent/helm-release.yaml
     image:
       repository: timberio/vector
       tag: 0.22.2-debian
