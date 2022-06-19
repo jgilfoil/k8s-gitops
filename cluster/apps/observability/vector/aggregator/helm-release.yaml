@@ -116,17 +116,3 @@ spec:
                     values:
                       - Stateless-Aggregator
               topologyKey: kubernetes.io/hostname
-  postRenderers:
-    - kustomize:
-        patchesJson6902:
-          - target:
-              kind: Service
-              name: vector-aggregator
-            patch:
-              - op: add
-                path: /spec/externalIPs
-                value:
-                  - "${SVC_SYSLOG_ADDR}"
-              - op: replace
-                path: /spec/externalTrafficPolicy
-                value: Local
