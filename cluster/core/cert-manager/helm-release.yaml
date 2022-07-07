@@ -5,7 +5,7 @@ metadata:
   name: cert-manager
   namespace: cert-manager
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: cert-manager
@@ -16,22 +16,19 @@ spec:
         namespace: flux-system
   install:
     createNamespace: true
-    crds: CreateReplace
     remediation:
-      retries: 3
+      retries: 5
   upgrade:
-    crds: CreateReplace
     remediation:
-      retries: 3
+      retries: 5
   values:
-    installCRDs: true
+    installCRDs: false
     webhook:
       enabled: true
     extraArgs:
     - --dns01-recursive-nameservers=216.239.32.109:53,216.239.34.109:53,216.239.36.109:53,216.239.38.109:53
     - --dns01-recursive-nameservers-only
-    cainjector:
-      replicaCount: 1
+    replicaCount: 1
     podDnsPolicy: "None"
     podDnsConfig:
       nameservers:

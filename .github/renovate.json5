@@ -41,6 +41,17 @@
     ]
   },
   "regexManagers": [
+    {
+      "description": "Process CRD dependencies",
+      "fileMatch": ["cluster/crds/.+\\.ya?ml$"],
+      "matchStrings": [
+        // GitRepository where 'Git release/tag' matches 'Helm' version
+        "registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
+        // Kustomization where 'GitHub release artifact URL' matches 'Docker image' version
+        "datasource=(?<datasource>\\S+) image=(?<depName>\\S+)\n.*?-\\s(.*?)\/(?<currentValue>[^/]+)\/[^/]+\n"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
+    },
     // regexManager to read and process kube-prometheus-stack and velero CRD's
     {
       "fileMatch": [
