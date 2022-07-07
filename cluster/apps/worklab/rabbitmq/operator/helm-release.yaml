@@ -22,7 +22,7 @@ spec:
       image:
         registry: docker.io
         repository: bitnami/rabbitmq-cluster-operator
-        tag: 1.13.1-scratch-r2
+        tag: 1.14.0-scratch-r2
         pullPolicy: IfNotPresent
       resources:
         limits:
