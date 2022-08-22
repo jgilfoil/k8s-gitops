@@ -35,7 +35,7 @@ spec:
       image:
         registry: docker.io
         repository: bitnami/rmq-messaging-topology-operator
-        tag: 1.7.1-scratch-r0
+        tag: 1.8.0-scratch-r0
         pullPolicy: latest
       resources:
         limits:
