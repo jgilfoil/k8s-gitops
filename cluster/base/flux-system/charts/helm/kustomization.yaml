@@ -13,3 +13,4 @@ resources:
 - node-feature-discovery-charts.yaml
 - grafana-charts.yaml
 - vector-charts.yaml
+- bjw-s-charts.yaml
