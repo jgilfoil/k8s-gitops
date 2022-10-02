@@ -20,6 +20,11 @@ spec:
       tag: v0.4.7.1995
     env:
       TZ: "America/New_York"
+    service:
+      main:
+        ports:
+          http:
+            port: 9696
     ingress:
       main:
         enabled: true

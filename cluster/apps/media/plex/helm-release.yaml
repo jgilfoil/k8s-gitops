@@ -32,6 +32,9 @@ spec:
         externalIPs:
           - "${SVC_PLEX_ADDR}"
         externalTrafficPolicy: Local
+        ports:
+          http:
+            port: 32400
         annotations:
           traefik.ingress.kubernetes.io/service.serversscheme: https
     ingress:

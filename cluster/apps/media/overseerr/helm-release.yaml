@@ -23,6 +23,12 @@ spec:
     env:
       TZ: "America/New_York"
       LOG_LEVEL: "info"
+      PORT: 80
+    service:
+      main:
+        ports:
+          http:
+            port: 80
     ingress:
       main:
         enabled: true
