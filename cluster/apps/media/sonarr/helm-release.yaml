@@ -20,6 +20,11 @@ spec:
       tag: v3.0.9.1549
     env:
       TZ: "America/New_York"
+    service:
+      main:
+        ports:
+          http:
+            port: 8989
     ingress:
       main:
         enabled: true
