@@ -15,6 +15,9 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
   values:
+    controller:
+      type: daemonset
+      strategy: RollingUpdate
     image:
       repository: intel/intel-gpu-plugin
       tag: 0.24.0
@@ -25,6 +28,27 @@ spec:
     service:
       main:
         enabled: false
+    ingress:
+      main:
+        enabled: false
+    persistence:
+      devfs:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/dri
+        hostPathType: Directory
+        readOnly: true
+      sysfs:
+        enabled: true
+        type: hostPath
+        hostPath: /sys/class/drm
+        hostPathType: Directory
+        readOnly: true
+      kubeletsockets:
+        enabled: true
+        type: hostPath
+        hostPathType: Directory
+        hostPath: /var/lib/kubelet/device-plugins
     probes:
       liveness:
         enabled: false
