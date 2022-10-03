@@ -219,7 +219,6 @@ umount /mnt/data
 rbd unmap -p ceph-blockpool csi-vol-e72aa2dc-427c-11ed-a87f-6206f8af8b5f
 ```
 Then back in the k8s prompt, scale the pod back up
-Also, scale down the target pod
 ```sh
 kubectl -n media scale --replicas=1 deployment/prowlarr
 ```
