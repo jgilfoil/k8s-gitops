@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.2.1
+      version: 0.2.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -19,10 +19,16 @@ spec:
   values:
     image:
       repository: ghcr.io/sct/overseerr
-      tag: 1.29.1
+      tag: 1.30.0
     env:
       TZ: "America/New_York"
       LOG_LEVEL: "info"
+      PORT: 80
+    service:
+      main:
+        ports:
+          http:
+            port: 80
     ingress:
       main:
         enabled: true

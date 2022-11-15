@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: velero
-      version: 2.31.6
+      version: 2.32.0
       sourceRef:
         kind: HelmRepository
         name: vmware-tanzu-charts
@@ -17,7 +17,8 @@ spec:
       interval: 5m
   values:
     image:
-      repository: ghcr.io/k8s-at-home/velero
+      repository: velero/velero
+      tag: v1.9.2
     configuration:
       extraEnvVars:
         TZ: "America/New_York"
@@ -38,7 +39,7 @@ spec:
       logLevel: debug
     initContainers:
       - name: velero-plugin-for-aws
-        image: ghcr.io/k8s-at-home/velero-plugin-for-aws:v1.5.0
+        image: velero/velero-plugin-for-aws:v1.5.1@sha256:6e1817b6ad95c41182b24f2b373b1d9e6625c5e861b4d395e2dcde4bb9e2d547
         imagePullPolicy: IfNotPresent
         volumeMounts:
           - mountPath: /target

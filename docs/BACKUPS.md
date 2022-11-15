@@ -163,6 +163,65 @@ Resume flux syncing
 flux resume hr plex -n media
 ```
 
+### Manual Restores
+So apparently, velero restores don't work great. So, until it can be replaced, here are the steps for a restore directly from restic.
+
+First you'll need a few shell prompts.
+1) for kubectl to scale down/up deployments
+2) for the rbd tools pod for the data transfer
+
+From prompt 2, launch into the rbd tools pod.
+```sh
+kubectl -n rook-ceph exec -it $(kubectl -n rook-ceph get pod -l "app=rook-direct-mount" -o jsonpath='{.items[0].metadata.name}') -- bash
+```
+Back in prompt 1, gather the restic encryption password
+```sh
+k -n velero get secret velero-restic-credentials -o jsonpath="{.data.repository-password}{'\n'}" |base64 --decode
+```
+In the rbd tools pod (prompt2), set the env vars for restic
+```sh
+export RESTIC_PASSWORD="<password from velero-restic-credential retrieved above>"
+export AWS_ACCESS_KEY_ID="<access_key_id from Minio - K8S Backup User>"
+export AWS_SECRET_ACCESS_KEY="<access_key from Minio - K8S Backup User>"
+```
+Mount the snapshots from restic. (if you're restoring data from another namespace other than media, you'll need to substitute that int he bucket path)
+```sh
+mkdir /mnt/restic-data
+restic -r s3:http://wanshitong.apostoli.pw:9000/k8sbackups/restic/media mount /mnt/restic-data
+```
+Back in the k8s prompt, grab the csi of the pod you're targeting.
+```sh
+kubectl get pv/$(kubectl get pv | grep prowlarr-config-v1 | awk -F' ' '{print $1}') -n home -o json | jq -r '.spec.csi.volumeAttributes.imageName'
+```
+Also, scale down the target pod
+```sh
+kubectl -n media scale --replicas=0 deployment/prowlarr
+```
+Use the above csi volume id from above, in the rbd tools pod below, to mount the csi into the pod
+```sh
+rbd map -p ceph-blockpool csi-vol-e72aa2dc-427c-11ed-a87f-6206f8af8b5f \
+    | xargs -I{} mount {} /mnt/data
+```
+Empty the data out of /mnt/data if needed
+```sh
+rm /mnt/data/*
+```
+find the snapshot you want to restore data from and copy it to the csi volume
+```sh
+cd /mnt/restic-data/snapshots
+ls 2022-09-28*/folder_or_file_your_looking_for
+export source_folder=<snapshot_foldername_identified_above>
+rsync -ah --exclude 'snapshots/$source_folder/lost+found/' --progress /mnt/restic-data/snapshots/$source_folder/ /mnt/data/
+```
+unmount the csi volume (be sure to use the correct/updated csi volume id here)
+```sh
+umount /mnt/data
+rbd unmap -p ceph-blockpool csi-vol-e72aa2dc-427c-11ed-a87f-6206f8af8b5f
+```
+Then back in the k8s prompt, scale the pod back up
+```sh
+kubectl -n media scale --replicas=1 deployment/prowlarr
+```
 ## NAS Backups
 
 This is just to document what i'm doing with all my different NAS Volumes with respect to backups in the event that the NAS needs to be restored.
