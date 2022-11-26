@@ -17,7 +17,7 @@ spec:
       interval: 5m
   values:
     image:
-      repository: ghcr.io/weaveworks/kured
+      repository: ghcr.io/kubereboot/kured
     updateStrategy: RollingUpdate
     configuration:
       timeZone: "America/New_York"
