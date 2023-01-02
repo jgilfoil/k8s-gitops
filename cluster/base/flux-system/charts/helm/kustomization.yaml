@@ -14,3 +14,4 @@ resources:
 - grafana-charts.yaml
 - vector-charts.yaml
 - bjw-s-charts.yaml
+- piraeus.yaml
