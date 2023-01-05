@@ -83,6 +83,9 @@ spec:
       s3:
         enabled: true
         ingressClassName: traefik
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
           - host: s3.${SECRET_DOMAIN}
             paths:
