@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - secret.enc.yaml
   - nfs-pvc.yaml
-  # - helm-release.yaml
+  - helm-release.yaml
