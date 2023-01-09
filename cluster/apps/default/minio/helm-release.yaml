@@ -98,9 +98,9 @@ spec:
               - s3.${SECRET_DOMAIN}
             secretName: "s3-tls"
     podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
+      runAsUser: 1024
+      runAsGroup: 100
+      fsGroup: 100
       fsGroupChangePolicy: "OnRootMismatch"
       supplementalGroups:
         - 100
