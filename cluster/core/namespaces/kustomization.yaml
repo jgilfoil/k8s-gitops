@@ -11,3 +11,4 @@ resources:
 - vpn-gateway.yaml
 - worklab.yaml
 - observability.yaml
+- volsync.yaml
