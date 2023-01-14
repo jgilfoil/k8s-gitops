@@ -15,3 +15,4 @@ resources:
 - vector-charts.yaml
 - bjw-s-charts.yaml
 - piraeus.yaml
+- backube.yaml
