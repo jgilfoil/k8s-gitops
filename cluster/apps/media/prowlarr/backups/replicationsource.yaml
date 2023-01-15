@@ -3,11 +3,11 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: prowlarr
-  namespace: default
+  namespace: media
 spec:
   sourcePVC: prowlarr-config-v1
   trigger:
-    schedule: "55 23 * * *"
+    schedule: "58 23 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
