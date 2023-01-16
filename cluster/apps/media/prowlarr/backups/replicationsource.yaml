@@ -7,7 +7,7 @@ metadata:
 spec:
   sourcePVC: prowlarr-config-v1
   trigger:
-    schedule: "58 23 * * *"
+    schedule: "39 23 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
