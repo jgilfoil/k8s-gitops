@@ -5,4 +5,4 @@ resources:
   - kured
   - node-feature-discovery
   - intel-gpu-plugin
-  # - snapshot-controller
+  - snapshot-controller
