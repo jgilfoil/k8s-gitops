@@ -22,10 +22,10 @@ spec:
               command: ["/bin/sh"]
               args: ["-c", "find  /backups/containers/transmission/downloads-$(date +'%y-%m').tar -delete"]
               volumeMounts:
-              - name: backups
-                mountPath: /backups
+                - name: backups
+                  mountPath: /backups
           volumes:
-          - name: backups
-            nfs:
-              server: "wanshitong.apostoli.pw"
-              path: /volume1/Backup
+            - name: backups
+              nfs:
+                server: "wanshitong.apostoli.pw"
+                path: /volume1/Backup
