@@ -20,7 +20,7 @@ spec:
             - name: findanddelete
               image: busybox
               command: ["/bin/sh"]
-              args: ["-c", "find  /backups/containers/transmission/downloads-$(date +'%y-%m').tar -delete"]
+              args: ["-c", "find /backups/containers/transmission/ -name "downloads-*.tar" -mtime +180 -delete"]
               volumeMounts:
                 - name: backups
                   mountPath: /backups
