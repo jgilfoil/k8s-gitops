@@ -1,33 +1,139 @@
 # Backup and Restores
 
-## Services
-
-### Service Backups
-Backups are handled by velero. They run nightly and will backup any pods and pvcs attached to pods that are annotated properly. Be sure to properly labeel the resources for the app so they can be selectively restored. See below example:
+## Data Backups
+Backups are handled by volsync. They run nightly for any replicationsource objects in place. See below example:
 
 ```
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: prowlarr
+  namespace: media
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: kubia
+  sourcePVC: prowlarr-config-v1
+  trigger:
+    schedule: "00 11 * * *"
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: 10
+    repository: prowlarr-restic-secret
+    cacheCapacity: 2Gi
+    volumeSnapshotClassName: csi-ceph-blockpool
+    storageClassName: ceph-block
+    retain:
+      daily: 10
+      within: 3d
+```
+The above will snapshot the target pvc once per day, and then copy the contents via restic to a local minio service, which is back-ended by an nfs share from the NAS.
+## Data Restores
+Restores are triggered by applying a ReplicationDesination manifest for the target pvc. You must prepare the target deployment/pvc before initiating a restore.
+
+### Check current backup list
+
+You can use this job to get a list of the backups via restic
+```
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "list-prowlarr-20230116-0959"
+  namespace: "media"
+spec:
+  ttlSecondsAfterFinished: 3600
   template:
-    metadata:
-      name: kubia
-      labels:
-        app: kubia
-      annotations:
-        backup.velero.io/backup-volumes: custom 
+    spec:
+      automountServiceAccountToken: false
+      restartPolicy: OnFailure
+      containers:
+        - name: list
+          image: docker.io/restic/restic:0.14.0
+          args: ["snapshots"]
+          envFrom:
+            - secretRef:
+                name: "prowlarr-restic-secret"
 ```
-This value on the annotation should be the name of the volume you wish to backup.
+Update the secret name for the target pvc appropriately, referenced from the ReplicationSource used originally.
 
-### Service Restores
-Restores must be done for the pod and the volume at the same time. Best option is to pause the flux syncing for the resource, delete the resources associated with the app and then initiate a restore with the below command
+### Prepare Target Deployment/PVC
+Suspend the Flux Helm Release for the deployment that uses the target PVC.
 ```
-velero restore create --from-backup velero-daily-backup-20211013060052 --restore-volumes=true --include-namespaces default -l app=kubia
+flux -n media suspend hr prowlarr
 ```
-Specify the namespace the app is located in, and the label selectors on the application and volume. If the resources are not properly labeled in the backup, then restore the entire namespace.
+Scale down the target deployment
+```
+kubectl scale deploy/prowlarr --replicas 0 -n media
+```
+Wipe the PVC if neccessary
+The restore process will only overwrite existing files, it does not remove any files that don't exist in the backup. It's probably best to wipe it unless you're very very sure. Deploy the following pod to access the PVC.
+```
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: temp-shell
+  namespace: media
+spec:
+  containers:
+    - name: temp-shell
+      image: busybox
+      command: ["tail", "-f", "/dev/null"]
+      volumeMounts:
+      - name: config
+        mountPath: /config
+  volumes:
+  - name: config
+    persistentVolumeClaim:
+      claimName: prowlarr-config-v1
+```
+Exec into the container and remove all data from the target volume.
+```
+kubectl -n media exec -it temp-shell -- /bin/sh -c 'rm -rf /config/*'
+```
+Delete the pod when done
 
+### Restore Data to PVC
+Apply the replicationdestination.yaml found in the backups/ folder of the target service. Example:
+
+```
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: "prowlarr-2023-01-17-2110"
+  namespace: "media"
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: "prowlarr-restic-secret"
+    destinationPVC: "prowlarr-config-v1"
+    copyMethod: Direct
+    storageClassName: ceph-block
+    # IMPORTANT NOTE:
+    #   Set to the last X number of snapshots to restore from
+    previous: 1
+    # OR;
+    # IMPORTANT NOTE:
+    #   On bootstrap set `restoreAsOf` to the time the old cluster was destroyed.
+    #   This will essentially prevent volsync from trying to restore a backup
+    #   from a application that started with default data in the PVC.
+    #   Do not restore snapshots made after the following RFC3339 Timestamp.
+    #   date --rfc-3339=seconds (--utc)
+    # restoreAsOf: "2022-12-10T16:00:00-05:00"
+```
+Check on it's progress with 
+```
+k -n media get replicationdestination
+```
+Once completed verify the files are restored by creating the temp-shell pod again, and then scale the deployment back to the original size.
+```
+kubectl scale deploy/prowlarr --replicas 1 -n media
+```
+Resume the Flux HelmRelease once the app is confirmed working.
+```
+flux -n media resume hr prolwarr
+```
 ## Manual Data Manipulation
 
 Taken from [Onedr0p's guide](https://onedr0p.github.io/home-cluster/storage/rook-pvc-backup/).
@@ -136,100 +242,17 @@ Delete all resources associated with the app. For now we're gonna try this with 
 kubectl delete ns media
 ```
 
-Following the same pattern from [Service Restores](./BACKUPS.md#service-restores), create a velero restore job
+Following the same pattern from [Data Restores](./BACKUPS.md#data-restores). Follow those steps for each app. Best to start with plex and work your way backwards into the rest of applications in the chain, transmission, radarr, etc.
 
-```sh
-vagrant@control:/code/k8s-gitops$ velero get backups
-NAME                                 STATUS            ERRORS   WARNINGS   CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
-velero-daily-backup-20211119060033   Completed         0        0          2021-11-19 11:00:33 +0000 UTC   4d        default            <none>
-velero-daily-backup-20211118082401   Completed         0        0          2021-11-18 13:24:01 +0000 UTC   3d        default            <none>
-velero-daily-backup-20211118081532   PartiallyFailed   2        0          2021-11-18 13:15:33 +0000 UTC   3d        default            <none>
-velero-daily-backup-20211117060027   Completed         0        0          2021-11-17 11:00:27 +0000 UTC   32d       default            <none>
-velero-daily-backup-20211116060025   Completed         0        0          2021-11-16 11:00:25 +0000 UTC   1d        default            <none>
-velero-daily-backup-20211115060024   Completed         0        0          2021-11-15 11:00:24 +0000 UTC   20h       default            <none>
-
-vagrant@control:/code/k8s-gitops$ velero restore create --from-backup velero-daily-backup-20211117060027 --restore-volumes=true --include-namespaces media
-Restore request "velero-daily-backup-20211117060027-20211119144002" submitted successfully.
-Run `velero restore describe velero-daily-backup-20211117060027-20211119144002` or `velero restore logs velero-daily-backup-20211117060027-20211119144002` for more details.
-vagrant@control:/code/k8s-gitops$ velero get restores
-NAME                                                BACKUP                               STATUS       STARTED                         COMPLETED   ERRORS   WARNINGS   CREATED                         SELECTOR
-velero-daily-backup-20211117060027-20211119144002   velero-daily-backup-20211117060027   InProgress   2021-11-19 14:40:01 +0000 UTC   <nil>       0        0          2021-11-19 14:40:01 +0000 UTC   <none>
-vagrant@control:/code/k8s-gitops$
-```
-Wait for restore to complete, once completed, scale services back to desired number of replicas.
-
-Resume flux syncing
-```
-flux resume hr plex -n media
-```
-
-### Manual Restores
-So apparently, velero restores don't work great. So, until it can be replaced, here are the steps for a restore directly from restic.
-
-First you'll need a few shell prompts.
-1) for kubectl to scale down/up deployments
-2) for the rbd tools pod for the data transfer
-
-From prompt 2, launch into the rbd tools pod.
-```sh
-kubectl -n rook-ceph exec -it $(kubectl -n rook-ceph get pod -l "app=rook-direct-mount" -o jsonpath='{.items[0].metadata.name}') -- bash
-```
-Back in prompt 1, gather the restic encryption password
-```sh
-k -n velero get secret velero-restic-credentials -o jsonpath="{.data.repository-password}{'\n'}" |base64 --decode
-```
-In the rbd tools pod (prompt2), set the env vars for restic
-```sh
-export RESTIC_PASSWORD="<password from velero-restic-credential retrieved above>"
-export AWS_ACCESS_KEY_ID="<access_key_id from Minio - K8S Backup User>"
-export AWS_SECRET_ACCESS_KEY="<access_key from Minio - K8S Backup User>"
-```
-Mount the snapshots from restic. (if you're restoring data from another namespace other than media, you'll need to substitute that int he bucket path)
-```sh
-mkdir /mnt/restic-data
-restic -r s3:http://wanshitong.apostoli.pw:9000/k8sbackups/restic/media mount /mnt/restic-data
-```
-Back in the k8s prompt, grab the csi of the pod you're targeting.
-```sh
-kubectl get pv/$(kubectl get pv | grep prowlarr-config-v1 | awk -F' ' '{print $1}') -n home -o json | jq -r '.spec.csi.volumeAttributes.imageName'
-```
-Also, scale down the target pod
-```sh
-kubectl -n media scale --replicas=0 deployment/prowlarr
-```
-Use the above csi volume id from above, in the rbd tools pod below, to mount the csi into the pod
-```sh
-rbd map -p ceph-blockpool csi-vol-e72aa2dc-427c-11ed-a87f-6206f8af8b5f \
-    | xargs -I{} mount {} /mnt/data
-```
-Empty the data out of /mnt/data if needed
-```sh
-rm /mnt/data/*
-```
-find the snapshot you want to restore data from and copy it to the csi volume
-```sh
-cd /mnt/restic-data/snapshots
-ls 2022-09-28*/folder_or_file_your_looking_for
-export source_folder=<snapshot_foldername_identified_above>
-rsync -ah --exclude 'snapshots/$source_folder/lost+found/' --progress /mnt/restic-data/snapshots/$source_folder/ /mnt/data/
-```
-unmount the csi volume (be sure to use the correct/updated csi volume id here)
-```sh
-umount /mnt/data
-rbd unmap -p ceph-blockpool csi-vol-e72aa2dc-427c-11ed-a87f-6206f8af8b5f
-```
-Then back in the k8s prompt, scale the pod back up
-```sh
-kubectl -n media scale --replicas=1 deployment/prowlarr
-```
 ## NAS Backups
 
 This is just to document what i'm doing with all my different NAS Volumes with respect to backups in the event that the NAS needs to be restored.
 
  * Synology Configuration file (.dss) is currently manually exported periodically and uploaded to Google Drive\Backups
- * Minio docker config is backuped to to `Backup` Volume on NAS. See [here](https://github.com/jgilfoil/k8s-gitops/blob/main/minio/README.md#deploying-minio) for more details
+ * Minio docker config is backed up to to `Backup` Volume on NAS. See [here](https://github.com/jgilfoil/k8s-gitops/blob/main/minio/README.md#deploying-minio) for more details
  * Volume `Backup` is replicated to RAID Array on Forge and external usb storage
  * Volume `cluster-backup` is sync'd to Google Drive\Backups via Synology Cloud Sync, in addition to local RAID Array on Forge
+ * Volume `minio` is sync'd to Google Drive\Backups via Synology Cloud Sync, in addition to local RAID Array on Forge
  * Volume `docker` is not backed up. I think this is used to store container images.
  * Volume `Documents` is synce'd to Google Drive\Backups via Synology Cloud Sync, in addition to local RAID Array on Forge
  * Volume `Logs` is not backed up. This is just reports from Synology on the system.
@@ -240,5 +263,5 @@ I Believe a restore procedure would look something like this:
 
  * Import .dss config file from Google Drive\Backups
  * Restore data to volumes from their various backup sources
- * Do a cloud Sync Restore from google drive to `cluster-backup` and `Documents` volumes
+ * Do a cloud Sync Restore from google drive to `cluster-backup`, `minio` and `Documents` volumes
  * Restore minio docker instance from the configuration bacup json file
