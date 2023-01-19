@@ -2,7 +2,7 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: transmission
+  name: transmission-downloads
   namespace: media
 spec:
   sourcePVC: transmission-downloads-v1
