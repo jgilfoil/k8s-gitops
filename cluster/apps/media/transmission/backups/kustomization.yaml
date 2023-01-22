@@ -5,4 +5,4 @@ resources:
   - secret.yaml
   - replicationsource.yaml
   - secret-downloads.yaml
-  - replicationsource-downloads.yaml
+  # - replicationsource-downloads.yaml
