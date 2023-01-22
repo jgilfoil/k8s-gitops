@@ -7,7 +7,7 @@ metadata:
 spec:
   sourcePVC: transmission-downloads-v1
   trigger:
-    schedule: "03 02 * * *"
+    schedule: "07 02 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
