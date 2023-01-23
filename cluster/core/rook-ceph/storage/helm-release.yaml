@@ -39,6 +39,10 @@ spec:
             hosts:
               - "rook.${SECRET_DOMAIN}"
     cephClusterSpec:
+      mgr:
+        modules:
+          - name: rook
+            enabled: true
       dashboard:
         enabled: true
         urlPrefix: /
