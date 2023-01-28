@@ -6,7 +6,6 @@ resources:
 - metallb-system.yaml
 - networking.yaml
 - rook-ceph.yaml
-- velero.yaml
 - media.yaml
 - vpn-gateway.yaml
 - worklab.yaml
