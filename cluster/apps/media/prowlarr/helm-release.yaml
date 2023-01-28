@@ -57,5 +57,4 @@ spec:
       limits:
         memory: 500Mi
     podAnnotations:
-      backup.velero.io/backup-volumes: config
       setGateway: "true"
