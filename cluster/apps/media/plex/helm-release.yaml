@@ -86,13 +86,6 @@ spec:
                   operator: In
                   values:
                     - "true"
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
-      pre.hook.backup.velero.io/container: fsfreeze
-      pre.hook.backup.velero.io/command: '["/sbin/fsfreeze", "--freeze", "/config"]'
-      post.hook.backup.velero.io/container: fsfreeze
-      post.hook.backup.velero.io/command: '["/sbin/fsfreeze", "--unfreeze", "/config"]'
-      # configmap.reloader.stakater.com/reload: "plex-promtail"
     resources:
       requests:
         gpu.intel.com/i915: 1

@@ -188,7 +188,7 @@ spec:
                     target: "_traefik"
                   - name: "Cluster-Backup"
                     logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/minio.png"
-                    subtitle: "Minio Velero K8s Bacukps"
+                    subtitle: "Local NAS Minio"
                     tag: "Tools"
                     url: "http://wanshitong.apostoli.pw:9001/login"
                     target: "_minio"

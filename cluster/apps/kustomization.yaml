@@ -7,7 +7,6 @@ resources:
 - system-upgrade
 - kube-system
 - flux-system
-- velero
 - media
 - vpn-gateway
 - observability
