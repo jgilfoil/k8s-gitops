@@ -88,34 +88,13 @@
       ],
       "commitMessageExtra": "to {{newVersion}}"
     },
-    // automerge packages with loose versioning
+    // packages with loose versioning
     {
       "matchDatasources": [
         "docker",
-        "github-tags"
+        "github-releases"
       ],
       "versioning": "loose",
-      "automerge": true,
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ],
-      "matchPackageNames": [
-        "ghcr.io/k8s-at-home/plex",
-        "ghcr.io/k8s-at-home/transmission"
-      ]
-    },
-    // don't automerge packages with loose versioning
-    {
-      "matchDatasources": [
-        "docker",
-        "github-tags"
-      ],
-      "versioning": "loose",
-      "automerge": false,
-      "matchUpdateTypes": [
-        "major"
-      ],
       "matchPackageNames": [
         "ghcr.io/k8s-at-home/plex",
         "ghcr.io/k8s-at-home/transmission"
@@ -167,6 +146,7 @@
       ],
       "matchPackageNames": [
         "ghcr.io/k8s-at-home/prowlarr-nightly",
+        "renovatebot/github-action"
       ]
     },
     // label rules
