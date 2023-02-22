@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
   values:
     image:
-      repository: ghcr.io/k8s-at-home/plex
+      repository: ghcr.io/onedr0p/plex
       tag: v1.29.2.6364-6d72b0cf6
     env:
       TZ: "America/New_York"
@@ -94,30 +94,3 @@ spec:
       limits:
         gpu.intel.com/i915: 1
         memory: 16000Mi
-    # addons:
-    #   promtail:
-    #     enabled: true
-    #     image:
-    #       repository: ghcr.io/k8s-at-home/promtail
-    #       tag: v2.4.1
-    #     loki: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
-    #     logs:
-    #       - name: promtail/plex
-    #         path: "/config/Library/Application Support/Plex Media Server/Logs/*.log"
-    #       - name: promtail/plex/plugins
-    #         path: "/config/Library/Application Support/Plex Media Server/Logs/PMS Plugin Logs/*.log"
-    #     volumeMounts:
-    #       - name: config
-    #         mountPath: /config
-    #         readOnly: true
-    #     securityContext:
-    #       runAsUser: 0
-    additionalContainers:
-      fsfreeze:
-        name: fsfreeze
-        image: ghcr.io/k8s-at-home/fsfreeze:v2.37-r0
-        volumeMounts:
-          - name: config
-            mountPath: /config
-        securityContext:
-          privileged: true
