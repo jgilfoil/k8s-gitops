@@ -167,10 +167,6 @@
       ],
       "matchPackageNames": [
         "ghcr.io/k8s-at-home/prowlarr-nightly",
-        "ghcr.io/sct/overseerr",
-        "ghcr.io/k8s-at-home/radarr",
-        "ghcr.io/k8s-at-home/sonarr",
-        "renovatebot/github-action",
       ]
     },
     // label rules
