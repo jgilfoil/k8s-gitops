@@ -96,7 +96,7 @@
       ],
       "versioning": "loose",
       "matchPackageNames": [
-        "ghcr.io/k8s-at-home/plex",
+        "ghcr.io/onedr0p/plex",
         "ghcr.io/k8s-at-home/transmission"
       ]
     },
@@ -145,9 +145,9 @@
         "patch"
       ],
       "matchPackageNames": [
-        "ghcr.io/k8s-at-home/prowlarr-nightly",
-        "ghcr.io/k8s-at-home/sonarr-develop",
-        "ghcr.io/k8s-at-home/radarr-develop",
+        "ghcr.io/onedr0p/prowlarr-nightly",
+        "ghcr.io/onedr0p/sonarr-develop",
+        "ghcr.io/onedr0p/radarr-develop",
         "renovatebot/github-action"
       ]
     },
