@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: temp-shell
+  namespace: media
+spec:
+  containers:
+    - name: temp-shell
+      image: busybox
+      command: ["tail", "-f", "/dev/null"]
+      volumeMounts:
+      - name: config
+        mountPath: /config
+  volumes:
+  - name: config
+    persistentVolumeClaim:
+      claimName: plex-config-v2
+  # volumes:
+  # - name: backups
+  #   nfs:
+  #     server: "redacted.domain.com"
+  #     path: /volume1/Backup
