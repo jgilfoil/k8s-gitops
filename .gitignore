@@ -13,3 +13,4 @@ kubeconfig
 temp/
 # Terraform files
 .terraform
+terraform.tfstate.backup
