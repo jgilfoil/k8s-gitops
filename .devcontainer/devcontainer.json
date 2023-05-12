@@ -1,0 +1,32 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+	"name": "k8s-gitops",
+	"image": "jgilfoil/k8scontrol:latest",
+
+	"customizations": {
+		"vscode": {
+		  "extensions": [
+			"redhat.vscode-yaml",
+			"ms-azuretools.vscode-docker",
+			"timonwong.shellcheck",
+			"mads-hartmann.bash-ide-vscode",
+			"GitHub.vscode-github-actions",
+            "ipedrazas.kubernetes-snippets",
+            "Weaveworks.vscode-gitops-tools"
+		  ]
+		}
+	},
+
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {},
+		"ghcr.io/devcontainers-contrib/features/ansible:2": {},
+	},
+
+	"mounts": [
+      "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/mnt/user/.ssh,type=bind,consistency=consistent",
+      "source=${localEnv:HOME}${localEnv:USERPROFILE}/.kube,target=/home/user/.kube,type=bind,consistency=consistent"
+    ]
+
+}
+
