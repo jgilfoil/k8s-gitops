@@ -1,0 +1,13 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: mymininai
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  url: ssh://git@github.com/jgilfoil/mymindinai
+  ref:
+    branch: main
+  secretRef:
+    name: mymindinai-repo-creds
