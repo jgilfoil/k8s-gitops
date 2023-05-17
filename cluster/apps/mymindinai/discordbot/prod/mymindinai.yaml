@@ -7,7 +7,8 @@ metadata:
 spec:
   interval: 10m
   dependsOn:
-   - apps
+   - name: apps
+     namespace: flux-system
   targetNamespace: mymindinai
   sourceRef:
     kind: GitRepository
