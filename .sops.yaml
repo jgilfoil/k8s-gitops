@@ -3,7 +3,9 @@ creation_rules:
 
   - path_regex: cluster/.*\.ya?ml
     encrypted_regex: '^(data|stringData)$'
-    age: age1ktk92hs2qmfm8wnchvjve4z3wx60csm8g37mqj5gaw480x6mvemsn3rd4p
+    key_groups:
+      - age:
+          - age1ktk92hs2qmfm8wnchvjve4z3wx60csm8g37mqj5gaw480x6mvemsn3rd4p
   
   - path_regex: minio/.*\.sops\.ya?ml
     unencrypted_regex: "^(kind)$"
