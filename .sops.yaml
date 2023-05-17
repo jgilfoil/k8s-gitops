@@ -3,12 +3,12 @@ creation_rules:
 
   - path_regex: cluster/.*\.ya?ml
     encrypted_regex: '^(data|stringData)$'
-    pgp: >-
-      EF57649CB133800963D136C6B813D6D7F00C2572,
-      0341B76EFD798D9008EE3A5B442753990A538576
+    key_groups:
+      - age:
+          - age1ktk92hs2qmfm8wnchvjve4z3wx60csm8g37mqj5gaw480x6mvemsn3rd4p
   
   - path_regex: minio/.*\.sops\.ya?ml
     unencrypted_regex: "^(kind)$"
-    pgp: >-
-      EF57649CB133800963D136C6B813D6D7F00C2572,
-      0341B76EFD798D9008EE3A5B442753990A538576
+    key_groups:
+      - age:
+          - age1ktk92hs2qmfm8wnchvjve4z3wx60csm8g37mqj5gaw480x6mvemsn3rd4p
