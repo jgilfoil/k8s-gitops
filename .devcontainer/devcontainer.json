@@ -21,6 +21,8 @@
 	"features": {
 		"ghcr.io/devcontainers/features/common-utils:2": {},
 		"ghcr.io/devcontainers-contrib/features/ansible:2": {},
+		"ghcr.io/devcontainers-contrib/features/age:1": {},
+		"ghcr.io/devcontainers-contrib/features/age-keygen:1": {}
 	},
 
 	"mounts": [
