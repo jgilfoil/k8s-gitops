@@ -11,3 +11,4 @@ resources:
 - worklab.yaml
 - observability.yaml
 - volsync.yaml
+- mymindinai.yaml
