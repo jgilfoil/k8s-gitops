@@ -30,8 +30,8 @@ spec:
               name: discordbot-secrets
               key: MIDJOURNEY_BOT_ID
         volumeMounts:
-            - mountPath: /app/images
-              name: images
+          - mountPath: /app/images
+            name: images
       volumes:
       - name: images
         persistentVolumeClaim:
