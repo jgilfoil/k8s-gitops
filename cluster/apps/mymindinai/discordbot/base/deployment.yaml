@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mymind-bot
+  labels:
+    app: mymind-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mymind-bot
+  template:
+    metadata:
+      labels:
+        app: mymind-bot
+    spec:
+      containers:
+      - name: mymind-bot
+        image: jgilfoil/mymindai-discordbot:latest
+        env:
+        - name: DISCORD_BOT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: discordbot-secrets
+              key: DISCORD_BOT_TOKEN
+        - name: MIDJOURNEY_BOT_ID
+          valueFrom:
+            secretKeyRef:
+              name: discordbot-secrets
+              key: MIDJOURNEY_BOT_ID
+        volumeMounts:
+            - mountPath: /app/images
+              name: images
+      volumes:
+      - name: images
+        persistentVolumeClaim:
+          claimName: mymindinai-images-nfs
