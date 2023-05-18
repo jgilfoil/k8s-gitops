@@ -13,6 +13,8 @@ spec:
   sourceRef:
     kind: GitRepository
     name: mymindinai
-  path: "./kubernetes"
+  path: "./kubernetes/overlays/prod"
   prune: true
   timeout: 1m
+  patchesStrategicMerge:
+  - patch.yaml
