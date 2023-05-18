@@ -13,7 +13,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: mymindinai
-  path: "./kubernetes/overlays/prod"
+  path: "./kubernetes/discordbot/overlays/prod"
   prune: true
   timeout: 1m
   patchesStrategicMerge:
