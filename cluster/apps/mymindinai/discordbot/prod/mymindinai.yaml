@@ -17,4 +17,15 @@ spec:
   prune: true
   timeout: 1m
   patchesStrategicMerge:
-    - patch.yaml
+  - |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: mymind-bot
+    spec:
+      template:
+        spec:
+          volumes:
+          - name: images
+            persistentVolumeClaim:
+              claimName: mymindinai-nfs
