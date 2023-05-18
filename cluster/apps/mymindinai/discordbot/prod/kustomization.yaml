@@ -7,4 +7,4 @@ resources:
 - images-nfs.yaml
 
 patchesStrategicMerge:
-  - patch-deploy.yaml
+- patch-deploy.yaml
