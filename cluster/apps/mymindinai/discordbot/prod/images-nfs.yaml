@@ -12,7 +12,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: "wanshitong.${SECRET_DOMAIN}"
-    path: /volume11/MyMindInAI
+    path: /volume11/MyMindInAI/images
   mountOptions:
     - nconnect=8
     - noatime
@@ -20,7 +20,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mymindinai-nfs
+  name: mymindinai-images-nfs
   namespace: mymindinai
 spec:
   accessModes:
