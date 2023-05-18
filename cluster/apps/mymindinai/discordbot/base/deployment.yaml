@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: mymind-bot
-        image: jgilfoil/mymindai-discordbot:latest
+        image: jgilfoil/mymindinai-discordbot:latest
         env:
         - name: DISCORD_BOT_TOKEN
           valueFrom:
