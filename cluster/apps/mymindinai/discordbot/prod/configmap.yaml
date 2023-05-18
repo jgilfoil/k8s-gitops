@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mymindinai-config
+  namespace: mymindinai
+data:
+  LOG_LEVEL: "DEBUG"

@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mymind-bot
+  namespace: mymindinai
+spec:
+  template:
+    spec:
+      containers:
+      - name: mymind-bot
+        env:
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: discordbot-config
+              key: LOG_LEVEL
