@@ -7,12 +7,14 @@ metadata:
 spec:
   interval: 10m
   dependsOn:
-   - name: apps
-     namespace: flux-system
+    - name: apps
+      namespace: flux-system
   targetNamespace: mymindinai
   sourceRef:
     kind: GitRepository
     name: mymindinai
-  path: "./kubernetes"
+  path: "./kubernetes/overlays/prod"
   prune: true
   timeout: 1m
+  patchesStrategicMerge:
+    - patch.yaml
