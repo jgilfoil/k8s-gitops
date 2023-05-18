@@ -5,6 +5,7 @@ resources:
 - ../base
 - secret.sops.yaml
 - images-nfs.yaml
+- configmap.yaml
 
 patchesStrategicMerge:
 - patch-deploy.yaml
