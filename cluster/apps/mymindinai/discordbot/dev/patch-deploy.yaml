@@ -10,12 +10,12 @@ spec:
       containers:
       - name: discord-bot
         env:
-        - name: loglevel
+        - name: LOG_LEVEL
           valueFrom:
             configMapKeyRef:
               name: discordbot-config
               key: LOG_LEVEL
-        - name: emoji_string
+        - name: EMOJI_STRING
           valueFrom:
             configMapKeyRef:
               name: discordbot-config
