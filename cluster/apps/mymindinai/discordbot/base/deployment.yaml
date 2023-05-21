@@ -2,22 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mymind-bot
+  name: mymind-discord-bot
   namespace: mymindinai
   labels:
-    app: mymind-bot
+    app: mymind-discord-bot
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mymind-bot
+      app: mymind-discord-bot
   template:
     metadata:
       labels:
-        app: mymind-bot
+        app: mymind-discord-bot
     spec:
       containers:
-      - name: mymind-bot
+      - name: discord-bot
         image: jgilfoil/mymindinai-discordbot:latest
         env:
         - name: DISCORD_BOT_TOKEN

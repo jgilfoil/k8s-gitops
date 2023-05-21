@@ -10,7 +10,7 @@ spec:
       containers:
       - name: mymind-bot
         env:
-        - name: LOG_LEVEL
+        - name: loglevel
           valueFrom:
             configMapKeyRef:
               name: discordbot-config
