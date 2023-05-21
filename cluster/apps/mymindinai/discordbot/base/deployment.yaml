@@ -20,12 +20,12 @@ spec:
       - name: discord-bot
         image: jgilfoil/mymindinai-discordbot:latest
         env:
-        - name: DISCORD_BOT_TOKEN
+        - name: discord_bot_token
           valueFrom:
             secretKeyRef:
               name: discordbot-secrets
               key: DISCORD_BOT_TOKEN
-        - name: MIDJOURNEY_BOT_ID
+        - name: midjourney_bot_id
           valueFrom:
             secretKeyRef:
               name: discordbot-secrets
