@@ -15,3 +15,8 @@ spec:
             configMapKeyRef:
               name: discordbot-config
               key: LOG_LEVEL
+        - name: emoji_string
+          valueFrom:
+            configMapKeyRef:
+              name: discordbot-config
+              key: EMOJI_STRING
