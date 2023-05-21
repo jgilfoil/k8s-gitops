@@ -20,3 +20,4 @@ spec:
             configMapKeyRef:
               name: discordbot-config
               key: EMOJI_STRING
+      replicas: 0
