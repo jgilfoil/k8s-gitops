@@ -6,4 +6,4 @@ metadata:
   namespace: mymindinai-dev
 data:
   LOG_LEVEL: "DEBUG"
-  EMOJI_STRING: ":test_tube:"
+  EMOJI_STRING: "🧪"
