@@ -2,13 +2,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mymind-bot
+  name: mymind-discord-bot
   namespace: mymindinai
 spec:
   template:
     spec:
       containers:
-      - name: mymind-bot
+      - name: discord-bot
         env:
         - name: loglevel
           valueFrom:
