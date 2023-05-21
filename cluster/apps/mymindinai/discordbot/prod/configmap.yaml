@@ -5,4 +5,4 @@ metadata:
   name: discordbot-config
   namespace: mymindinai
 data:
-  LOG_LEVEL: "INFO"
+  LOG_LEVEL: "DEBUG"
