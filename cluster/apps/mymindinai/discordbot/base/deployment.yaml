@@ -8,6 +8,8 @@ metadata:
     app: mymind-discord-bot
 spec:
   replicas: 1
+  strategy:
+    type: recreate
   selector:
     matchLabels:
       app: mymind-discord-bot
