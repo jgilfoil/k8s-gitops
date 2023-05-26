@@ -16,8 +16,8 @@ if ! [[ -f "${radarr_moviefile_sourcepath}" ]]; then
 fi
 
 # If it isn't a single file, it might be a packed release which should be skipped.
-base_dir=$( basename "${radarr_moviefile_sourcefolder}" )
-if [[ "${base_dir}" != "${radarr_label}" ]] && find "${radarr_moviefile_sourcefolder}" -iregex '.*\.r[0-9a][0-9r]$' | grep -Eq '.*'; then
+base_dir=$(basename "${radarr_moviefile_sourcefolder}")
+if [[ "${base_dir}" != "${radarr_label}" ]] && find "${radarr_moviefile_sourcefolder}" -type f -iname '*.r[0-9a][0-9r]' | grep -Eq '.*'; then
   echo "[Torrent Symlink] Found rar or r00 files, skipping symlink creation." 
   exit
 fi
