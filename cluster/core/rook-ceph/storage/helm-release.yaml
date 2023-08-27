@@ -52,9 +52,9 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: "odroid-01"
-            devices:
-              - name: "sda"
+          # - name: "odroid-01"
+          #   devices:
+          #     - name: "sda"
           - name: "odroid-02"
             devices:
               - name: "sda"
