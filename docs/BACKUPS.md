@@ -136,6 +136,22 @@ flux -n media resume hr prolwarr
 ```
 ## Manual Data Manipulation
 
+### VolSync Restic CLI
+
+Use [restic-cli.yaml](../tests/volsync/restic-cli.yaml) to get a pod you can shell into and execute restic commands from.
+
+This is particularly useful when troubleshooting a locked backend like this:
+```
+Fatal: unable to create lock in backend: repository is already locked by PID 33 on volsync-src-plex-s84f5 by  (UID 0, GID 0) 
+lock was created at 2023-07-26 23:44:23 (186h12m34.666809971s ago)
+```
+
+then 
+```
+restic unlock
+```
+
+
 Taken from [Onedr0p's guide](https://onedr0p.github.io/home-cluster/storage/rook-pvc-backup/).
 
 ### Create the toolbox container
