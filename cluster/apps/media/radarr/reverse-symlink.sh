@@ -1,4 +1,16 @@
-#!/usr/bin/bash
+#!/bin/bash
+
+# Check for radarr_eventtype and handle 'download' or 'test' events.
+if [[ "$radarr_eventtype" == "Download" ]]; then
+  echo "Handling Download event."
+elif [[ "$radarr_eventtype" == "Test" ]]; then
+  echo "Handling Test event."
+  exit 0
+else
+  echo "Unsupported event type: $radarr_eventtype"
+  exit 0
+fi
+
 radarr_label="Movies"
 
 echo "radarr_moviefile_sourcepath: $radarr_moviefile_sourcepath" 
