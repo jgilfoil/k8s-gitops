@@ -18,7 +18,7 @@ echo "radarr_moviefile_path: $radarr_moviefile_path"
 
 # Make sure we're working on torrents.
 if ! [[ "${radarr_moviefile_sourcepath}" =~ radarr ]]; then
-  echo "[Torrent Symlink] Path ${radarr_moviefile_sourcepath} does not contain \"torrent\", exiting."
+  echo "[Torrent Symlink] Path ${radarr_moviefile_sourcepath} does not contain \"radarr\", exiting."
 fi
 
 # If the source file doesn't exist, error out.
