@@ -27,8 +27,8 @@ spec:
     auth:
       rootUser: root
       rootPassword: "${SECRET_MONGODB_PASSWORD}"
-      usernames: ["${SECRET_MONGODB_UNIFI_USERNAME}"]
-      passwords: ["${SECRET_MONGODB_UNIFI_PASSWORD}"]
+      usernames: ["${SECRET_MONGODB_UNIFI_USERNAME}", "${SECRET_MONGODB_UNIFI_USERNAME}"]
+      passwords: ["${SECRET_MONGODB_UNIFI_PASSWORD}", "${SECRET_MONGODB_UNIFI_PASSWORD}"]
       databases: ["UNIFI", "UNIFI_stat"]
     persistence:
       enabled: true
