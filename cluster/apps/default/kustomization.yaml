@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
 - homer
 - minio
-- mongodb
+# - mongodb
