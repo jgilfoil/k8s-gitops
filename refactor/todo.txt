@@ -1,0 +1,27 @@
+complete manifest conversions for:
+x all media
+x VPN-gateway
+rook
+ - check rook dashboard password (where did this come from? i think i need to encrypt my own)
+x volsync
+x system-upgrade? (maybe not with talos)
+x intel-gpu-plugin
+x node-feature-discovery
+x kured? (maybe not with talos)
+x snapshot-controller
+x metallb
+
+- migrate mymindinAI to docker-compose
+- test restore of data in KIND cluster
+  - backup data
+  - shutdown current minio deploy
+  - deploy secondary minio
+  - apply replicationdestination.yaml
+  - update replica of busybox-shell
+  - check data
+  - teardown and start old minio
+- test talos in kind cluster
+X- figure out certs
+- add  volsync.backube/privileged-movers: "true" annotation to namespaces where backups and restores are needed
+- investigate VolumeSnapshotClass and is need in replicationdestinations
+- test automatic restore in existing cluster
