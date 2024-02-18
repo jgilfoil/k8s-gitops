@@ -17,19 +17,13 @@ spec:
         kind: HelmRepository
         name: angelnu-helm-charts
         namespace: flux-system
-  #See https://github.com/angelnu/helm-charts/blob/main/charts/apps/pod-gatewa/values.yaml
+  #See https://github.com/angelnu/helm-charts/blob/main/charts/apps/pod-gateway/values.yaml
   values:
 
     image:
       repository: ghcr.io/angelnu/pod-gateway
       # I am using dev version for testing - others should be using latest
       tag: v1.10.0
-    webhook:
-      image:
-        repository: ghcr.io/angelnu/gateway-admision-controller
-        # Use dev version
-        pullPolicy: Always
-        tag: dev
     addons:
       vpn:
         enabled: true
@@ -83,22 +77,18 @@ spec:
                   cidr: 0.0.0.0/0
               ports:
               # VPN traffic
-              - port: &vpn_port ${SECRET_VPN_GATEWAY_PORT}
+              - port: ${SECRET_VPN_GATEWAY_PORT}
                 protocol: UDP
             - to:
               - ipBlock:
                   cidr: 10.0.0.0/8
-
-    routed_namespaces:
-    - media
-    
     settings:
       # -- If using a VPN, interface name created by it
       VPN_INTERFACE: wg0
       # -- Prevent non VPN traffic to leave the gateway
       VPN_BLOCK_OTHER_TRAFFIC: true
       # -- If VPN_BLOCK_OTHER_TRAFFIC is true, allow VPN traffic over this port
-      VPN_TRAFFIC_PORT: *vpn_port
+      VPN_TRAFFIC_PORT: ${SECRET_VPN_GATEWAY_PORT}
       # -- Traffic to these IPs will be sent through the K8S gateway
       VPN_LOCAL_CIDRS: "172.16.0.0/12 10.42.0.0/16 10.43.0.0/16 192.168.1.0/24"
     
@@ -112,3 +102,16 @@ spec:
         port: 27071
       - type: tcp
         port: 27071
+
+    routed_namespaces:
+    - media
+    webhook:
+      image:
+        repository: ghcr.io/angelnu/gateway-admision-controller
+        pullPolicy: Always
+        tag: v3.9.0
+      gatewayDefault: false
+      gatewayLabel: routeToVPN
+      gatewayAnnotation: routeToVPN
+      namespaceSelector:
+        label: "vpn-routed-gateway"

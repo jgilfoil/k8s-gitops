@@ -7,7 +7,7 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: "${APP}-volsync-secret"
+    repository: "${APP}-restic-secret"
     copyMethod: Snapshot
     volumeSnapshotClassName: "csi-ceph-blockpool"
     cacheCapacity: "${VOLSYNC_CACHE_CAPCITY}"

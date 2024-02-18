@@ -33,6 +33,7 @@ spec:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
+          routeToVPN: "true"
         containers:
           main:
             image:
@@ -145,5 +146,3 @@ spec:
       watch:
         enabled: false
         mountPath: /watch
-    podAnnotations:
-      setGateway: "true"

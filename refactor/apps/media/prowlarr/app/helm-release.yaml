@@ -33,6 +33,7 @@ spec:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
+          routeToVPN: "true"
         containers:
           main:
             image:
