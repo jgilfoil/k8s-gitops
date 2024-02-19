@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: discordbot-config
+  namespace: mymindinai-dev
+data:
+  LOG_LEVEL: "DEBUG"
+  EMOJI_STRING: "🧪"
