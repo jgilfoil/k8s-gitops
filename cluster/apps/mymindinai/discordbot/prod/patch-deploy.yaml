@@ -5,6 +5,7 @@ metadata:
   name: mymind-discord-bot
   namespace: mymindinai
 spec:
+  replicas: 0
   template:
     spec:
       containers:
