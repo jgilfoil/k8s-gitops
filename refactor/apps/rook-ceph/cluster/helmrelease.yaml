@@ -68,13 +68,13 @@ spec:
         nodes:
           - name: odroid-01
             devices:
-              - name: /dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S6S1NJ0TB03807K
+              - name: /dev/nvme0n1p1
           - name: odroid-02
             devices:
-              - name: /dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S6S1NS0W223961P
+              - name: /dev/nvme0n1p1
           - name: odroid-03
             devices:
-              - name: /dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S6S1NS0W224436E
+              - name: /dev/nvme0n1p1
       placement:
         mgr: &placement
           nodeAffinity:
