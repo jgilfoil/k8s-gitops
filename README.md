@@ -1,5 +1,8 @@
 # Jason's K3s Cluster state managed by Flux
 
+## Archived
+This repo has been retired in favor of my new, updated home-cluster repo, [https://github.com/jgilfoil/home-cluster](https://github.com/jgilfoil/home-cluster). This repo is here just for historical purposes.
+
 [GitOps](https://www.weave.works/blog/what-is-gitops-really) Repo for deploying my [k3s](https://k3s.io/) cluster with [k3sup](https://github.com/alexellis/k3sup) backed by [Flux](https://toolkit.fluxcd.io/) and [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/).
 
 ## Overview
